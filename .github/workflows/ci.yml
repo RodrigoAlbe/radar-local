@@ -13,22 +13,22 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - name: Checkout repository
+      - name: Baixar repositorio
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
-      - name: Install dependencies
+      - name: Instalar dependencias
         run: npm ci
 
-      - name: Run lint
+      - name: Rodar lint
         run: npm run lint
 
-      - name: Run production build
+      - name: Rodar build de producao
         env:
           NEXT_DIST_DIR: .next-ci
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co

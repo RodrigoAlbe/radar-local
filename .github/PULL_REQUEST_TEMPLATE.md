@@ -1,25 +1,25 @@
-## Summary
+## Resumo
 
-Describe the main change in one short paragraph.
+Descreva a mudanca principal em um paragrafo curto.
 
-## What changed
-
-- 
-
-## Why this matters
+## O que mudou
 
 - 
 
-## Validation
+## Por que isso importa
+
+- 
+
+## Validacao
 
 - [ ] `npm run lint`
 - [ ] `npm run build`
-- [ ] Tested the affected flow locally
+- [ ] Testei localmente o fluxo afetado
 
-## Screenshots or demo notes
+## Screenshots ou notas de demo
 
-Add screenshots, short recordings, or notes when the change affects UI, UX, or public demos.
+Adicione screenshots, gravacoes curtas ou observacoes quando a mudanca afetar UI, UX ou demos publicas.
 
-## Risks or follow-ups
+## Riscos ou proximos passos
 
-List any known limitations, technical debt, or next steps.
+Liste limitacoes conhecidas, debitos tecnicos ou proximos passos.

@@ -1,5 +1,5 @@
-name: Bug report
-description: Report a reproducible bug in the product or developer workflow.
+name: Relato de bug
+description: Reporte um bug reproduzivel no produto ou no fluxo de desenvolvimento.
 title: "[Bug] "
 labels:
   - bug
@@ -7,53 +7,53 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting a bug. Please include enough detail for someone else to reproduce it quickly.
+        Obrigado por reportar um problema. Inclua detalhes suficientes para que outra pessoa consiga reproduzir rapidamente.
 
   - type: textarea
     id: summary
     attributes:
-      label: Summary
-      description: What is happening, and what did you expect instead?
-      placeholder: When I move a lead to another column, the lead disappears from the list view unexpectedly.
+      label: Resumo
+      description: O que esta acontecendo e o que voce esperava que acontecesse?
+      placeholder: Quando movo um lead para outra coluna, ele desaparece da lista de resultados de forma inesperada.
     validations:
       required: true
 
   - type: textarea
     id: steps
     attributes:
-      label: Steps to reproduce
-      description: List the exact steps someone can follow.
+      label: Passos para reproduzir
+      description: Liste os passos exatos para reproduzir o problema.
       placeholder: |
-        1. Go to /pipeline
-        2. Drag a lead from "Novo" to "Abordado"
-        3. Return to /resultados
-        4. Notice that...
+        1. Acesse /pipeline
+        2. Arraste um lead de "Novo" para "Abordado"
+        3. Volte para /resultados
+        4. Observe que...
     validations:
       required: true
 
   - type: textarea
     id: scope
     attributes:
-      label: Affected area
-      description: Which part of the product is affected?
-      placeholder: Search, results, lead detail, pipeline, history, public demo, screenshots, or docs.
+      label: Area afetada
+      description: Qual parte do produto foi afetada?
+      placeholder: Busca, resultados, detalhe do lead, pipeline, historico, demo publica, screenshots ou docs.
     validations:
       required: true
 
   - type: textarea
     id: evidence
     attributes:
-      label: Logs, screenshots, or extra context
-      description: Paste anything that helps narrow the problem down.
+      label: Logs, screenshots ou contexto extra
+      description: Cole qualquer informacao que ajude a investigar.
       render: shell
 
   - type: dropdown
     id: regression
     attributes:
-      label: Is this a regression?
+      label: Isso e uma regressao?
       options:
-        - I do not know
-        - Yes
-        - No
+        - Nao sei
+        - Sim
+        - Nao
     validations:
       required: true

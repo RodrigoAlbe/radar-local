@@ -1,5 +1,5 @@
-name: Feature request
-description: Suggest an improvement aligned with the product direction.
+name: Sugestao de feature
+description: Sugira uma melhoria alinhada com a direcao do produto.
 title: "[Feature] "
 labels:
   - enhancement
@@ -7,50 +7,50 @@ body:
   - type: markdown
     attributes:
       value: |
-        Radar Local is moving toward a sales-focused workflow for local-business prospecting.
-        Use this template to describe a concrete improvement and why it matters.
+        O Radar Local esta evoluindo para um fluxo de prospeccao orientado a vendas para negocios locais.
+        Use este template para descrever uma melhoria concreta e por que ela importa.
 
   - type: textarea
     id: problem
     attributes:
-      label: Problem to solve
-      description: What user pain or missed opportunity are you seeing?
-      placeholder: Users can find leads, but they still spend too much time deciding who to contact first.
+      label: Problema a resolver
+      description: Que dor de usuario ou oportunidade perdida voce esta vendo?
+      placeholder: Os usuarios conseguem encontrar leads, mas ainda gastam muito tempo decidindo quem abordar primeiro.
     validations:
       required: true
 
   - type: textarea
     id: proposal
     attributes:
-      label: Proposed solution
-      description: Describe the feature, behavior, or workflow you would like to add.
-      placeholder: Add a daily operational queue that groups hot leads, overdue follow-ups, and leads with responses.
+      label: Solucao proposta
+      description: Descreva a feature, comportamento ou fluxo que voce gostaria de adicionar.
+      placeholder: Adicionar uma fila operacional do dia que agrupe leads quentes, follow-ups atrasados e leads com resposta.
     validations:
       required: true
 
   - type: textarea
     id: outcome
     attributes:
-      label: Expected outcome
-      description: How would this improve conversion, usability, or maintainability?
-      placeholder: This would reduce decision fatigue and make the product feel more like a sales operating system.
+      label: Resultado esperado
+      description: Como isso melhoraria conversao, usabilidade ou manutencao?
+      placeholder: Isso reduziria a fadiga de decisao e deixaria o produto mais proximo de um sistema operacional comercial.
     validations:
       required: true
 
   - type: dropdown
     id: area
     attributes:
-      label: Main area
+      label: Area principal
       options:
-        - Search and sourcing
-        - Lead scoring
-        - Offer suggestion
-        - Lead detail
-        - Pipeline and follow-up
-        - Public demo and LP
-        - Screenshots and sharing
-        - Metrics and ROI
-        - Platform and infrastructure
+        - Busca e sourcing
+        - Scoring de leads
+        - Oferta sugerida
+        - Detalhe do lead
+        - Pipeline e follow-up
+        - Demo publica e LP
+        - Screenshots e compartilhamento
+        - Metricas e ROI
+        - Plataforma e infraestrutura
         - Docs
     validations:
       required: true
@@ -58,5 +58,5 @@ body:
   - type: textarea
     id: extra
     attributes:
-      label: Extra context
-      description: Add examples, references, or implementation constraints if helpful.
+      label: Contexto extra
+      description: Adicione exemplos, referencias ou restricoes de implementacao se isso ajudar.
