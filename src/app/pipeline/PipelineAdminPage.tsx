@@ -235,35 +235,42 @@ export default function PipelineAdminPage() {
   return (
     <div className="mx-auto w-full max-w-[1500px] space-y-8 pb-8">
       {toast ? (
-        <div className="fixed left-1/2 top-4 z-50 -translate-x-1/2 rounded-full bg-[#0b6d84] px-4 py-2 text-sm font-medium text-white shadow-lg">
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed left-1/2 top-4 z-50 -translate-x-1/2 rounded-full bg-[#0b6d84] px-4 py-2 text-sm font-medium text-white shadow-lg"
+        >
           {toast}
         </div>
       ) : null}
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <TopCard label="Total active leads" value={String(activeLeads)} helper="+ 12% this month" />
-        <TopCard label="Total proposed value" value={formatMoney(totalValue)} helper="Avg ticket: 5.9k" />
-        <TopCard label="Critical follow-ups" value={String(criticalFollowups)} helper="Overdue actions" accent />
-        <TopCard label="Conversion rate" value={conversionRate} helper="Industry top 10%" />
+        <TopCard label="Leads ativos" value={String(activeLeads)} helper="+ 12% neste mes" />
+        <TopCard label="Valor proposto" value={formatMoney(totalValue)} helper="Ticket medio: 5,9k" />
+        <TopCard label="Follow-ups criticos" value={String(criticalFollowups)} helper="Acoes atrasadas" accent />
+        <TopCard label="Taxa de conversao" value={conversionRate} helper="Top 10% da carteira" />
       </section>
 
       <section className="flex items-center justify-between gap-4">
         <div className="relative w-full max-w-md">
           <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8a97a2]" />
           <input
+            id="page-search"
             type="text"
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder="Search leads, companies..."
+            aria-label="Buscar leads no pipeline"
+            placeholder="Buscar leads, empresas..."
             className="w-full rounded-full border-none bg-[#e9edf2] py-3 pl-11 pr-4 text-sm text-[#0f2231] outline-none placeholder:text-[#8a97a2]"
           />
         </div>
 
         <Link
           href="/search"
+          aria-label="Criar uma nova prospeccao"
           className="hidden rounded-xl bg-[#0a5064] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90 lg:inline-flex"
         >
-          New Prospect
+          Nova prospeccao
         </Link>
       </section>
 
@@ -272,6 +279,8 @@ export default function PipelineAdminPage() {
           {STATUSES.map((status) => (
             <div
               key={status}
+              role="region"
+              aria-labelledby={`pipeline-column-${status}`}
               onDragOver={(event) => {
                 event.preventDefault();
                 setDragOverColumn(status);
@@ -285,7 +294,9 @@ export default function PipelineAdminPage() {
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <span className={`h-2.5 w-2.5 rounded-full ${COLUMN_META[status].dot}`} />
-                  <p className="text-sm font-bold text-[#0f2231]">{PIPELINE_LABELS[status]}</p>
+                  <p id={`pipeline-column-${status}`} className="text-sm font-bold text-[#0f2231]">
+                    {PIPELINE_LABELS[status]}
+                  </p>
                 </div>
                 <span className="text-xs font-semibold text-[#7b8792]">
                   {visiblePipeline[status].length}
@@ -305,6 +316,7 @@ export default function PipelineAdminPage() {
                       <article
                         key={lead.business.id}
                         draggable
+                        aria-label={`${lead.business.normalized_name}, etapa ${PIPELINE_LABELS[status]}`}
                         onDragStart={(event) => onDragStart(event, lead.business.id, status)}
                         className="rounded-[20px] border border-[#edf1f5] bg-[#fbfcfe] p-4 transition hover:border-[#d8e2e9] hover:shadow-[0_12px_24px_rgba(15,34,49,0.05)]"
                       >
@@ -337,6 +349,7 @@ export default function PipelineAdminPage() {
                             <div className="mt-4 flex items-center justify-between gap-2">
                               <Link
                                 href={`/lead/${lead.business.id}`}
+                                aria-label={`Ver detalhes de ${lead.business.normalized_name}`}
                                 className="text-xs font-semibold text-[#0b3348] transition hover:text-[#0a6e70]"
                               >
                                 Ver detalhes
@@ -346,6 +359,7 @@ export default function PipelineAdminPage() {
                                 <button
                                   type="button"
                                   onClick={() => handleAdvance(lead, nextStatus)}
+                                  aria-label={`Avancar ${lead.business.normalized_name} para ${PIPELINE_LABELS[nextStatus]}`}
                                   className="inline-flex items-center gap-1 rounded-full bg-[#eef3f7] px-3 py-1.5 text-xs font-bold text-[#0b3348] transition hover:bg-[#e5edf2]"
                                 >
                                   <ArrowRight className="h-3.5 w-3.5" />
@@ -379,7 +393,7 @@ export default function PipelineAdminPage() {
         </article>
 
         <article className="rounded-[24px] bg-[#08384a] p-5 text-white shadow-[0_18px_38px_rgba(8,56,74,0.2)]">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#70d0de]">Monthly goal</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#70d0de]">Meta mensal</p>
           <div className="mt-4 flex items-center gap-4">
             <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-[#70d0de]/40">
               <span className="text-xs font-bold">75%</span>

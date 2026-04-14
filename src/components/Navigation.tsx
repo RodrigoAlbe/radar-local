@@ -37,13 +37,19 @@ export default function Navigation() {
               Sales Intelligence
             </p>
           </div>
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#0b6d84] shadow-[0_10px_24px_rgba(15,34,49,0.08)]">
+          <div
+            aria-hidden="true"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#0b6d84] shadow-[0_10px_24px_rgba(15,34,49,0.08)]"
+          >
             <User className="h-4 w-4" />
           </div>
         </div>
       </header>
 
-      <nav className="safe-area-bottom fixed bottom-0 left-0 right-0 z-50 border-t border-[#edf1f5] bg-[#f8f9fc]/96 backdrop-blur-xl">
+      <nav
+        aria-label="Navegacao principal"
+        className="safe-area-bottom fixed bottom-0 left-0 right-0 z-50 border-t border-[#edf1f5] bg-[#f8f9fc]/96 backdrop-blur-xl"
+      >
         <div className="mx-auto flex max-w-6xl">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
@@ -53,6 +59,7 @@ export default function Navigation() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? "page" : undefined}
                 className={`flex flex-1 flex-col items-center gap-1 py-2 pt-3 text-[11px] transition-colors ${
                   active ? "font-semibold text-[#0b6d84]" : "text-[#6a7783] hover:text-[#0f2231]"
                 }`}

@@ -51,12 +51,19 @@ export default function ApproachMessage({
   };
 
   return (
-    <div className="space-y-3">
-      <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+    <div className="space-y-3" aria-label="Mensagem sugerida para abordagem">
+      <div
+        className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-thin"
+        role="group"
+        aria-label="Variantes de mensagem"
+      >
         {variants.map((v, i) => (
           <button
             key={v.type}
+            type="button"
             onClick={() => setSelected(i)}
+            aria-pressed={i === selected}
+            aria-label={`Selecionar variante ${v.label}`}
             className={`text-xs px-3 py-1.5 rounded-full whitespace-nowrap border transition-colors ${
               i === selected
                 ? "bg-primary text-white border-primary"
@@ -75,7 +82,9 @@ export default function ApproachMessage({
 
         <div className="absolute top-3 right-3 flex gap-1">
           <button
+            type="button"
             onClick={handleCopy}
+            aria-label="Copiar mensagem recomendada"
             className={`p-2 rounded-lg transition-colors ${
               copied
                 ? "bg-green-100 text-green-600"

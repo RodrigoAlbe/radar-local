@@ -76,7 +76,10 @@ export default function AdminShell({
           </p>
         </div>
 
-        <nav className="mt-10 flex-1 space-y-1 px-4">
+        <nav
+          aria-label="Navegacao principal"
+          className="mt-10 flex-1 space-y-1 px-4"
+        >
           {PRIMARY_NAV.map((item) => {
             const Icon = item.icon;
             const active = isItemActive(pathname, item);
@@ -85,6 +88,7 @@ export default function AdminShell({
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? "page" : undefined}
                 className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-all ${
                   active
                     ? "border-r-4 border-[#0b6d84] bg-[#eef3f7] text-[#0b3348]"
@@ -124,6 +128,7 @@ export default function AdminShell({
           <button
             type="button"
             onClick={handleHeaderSearch}
+            aria-label="Buscar prospects, leads ou regioes"
             className="flex w-full max-w-md items-center gap-3 rounded-full bg-[#e9edf2] px-4 py-2.5 text-left text-sm text-[#7a8591] transition hover:bg-[#e2e8ef]"
           >
             <Search className="h-4 w-4" />
@@ -145,13 +150,20 @@ export default function AdminShell({
             >
               <CircleHelp className="h-4 w-4" />
             </button>
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#0b6d84] shadow-[0_10px_24px_rgba(15,34,49,0.08)]">
+            <div
+              aria-hidden="true"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#0b6d84] shadow-[0_10px_24px_rgba(15,34,49,0.08)]"
+            >
               <UserCircle2 className="h-5 w-5" />
             </div>
           </div>
         </header>
 
-        <main className="flex-1 px-4 py-5 pb-24 lg:px-8 lg:py-8 lg:pb-10">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex-1 px-4 py-5 pb-24 lg:px-8 lg:py-8 lg:pb-10"
+        >
           {children}
         </main>
       </div>

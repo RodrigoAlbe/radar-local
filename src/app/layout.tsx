@@ -43,6 +43,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${plusJakarta.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background">
+        <a href="#main-content" className="skip-link">
+          Pular para o conteudo principal
+        </a>
         <StoreProvider>
           <AppFrame>{children}</AppFrame>
         </StoreProvider>

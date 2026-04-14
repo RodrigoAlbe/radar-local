@@ -147,7 +147,7 @@ export default function SearchAdminPage() {
         <div>
           <span className="inline-flex items-center gap-2 rounded-full bg-[#e5f4f7] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.24em] text-[#0a6e70]">
             <Sparkles className="h-3.5 w-3.5" />
-            Discovery mode
+            Oportunidades do dia
           </span>
 
           <h1 className="mt-6 text-5xl font-extrabold leading-[0.98] tracking-tight text-[#082d45] md:text-6xl">
@@ -173,19 +173,29 @@ export default function SearchAdminPage() {
 
       <section className="rounded-[28px] bg-white p-4 shadow-[0_18px_38px_rgba(15,34,49,0.06)] md:p-5">
         <div className="grid gap-3 xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_160px_220px] xl:items-center">
-          <FieldShell icon={<MapPin className="h-4 w-4" />} label="Localizacao">
+          <FieldShell
+            icon={<MapPin className="h-4 w-4" />}
+            label="Localizacao"
+            controlId="page-search"
+          >
             <input
               id="page-search"
               type="text"
               value={location}
               onChange={(event) => setLocation(event.target.value)}
               placeholder="Ex: Sao Paulo, SP"
+              aria-required="true"
               className="w-full bg-transparent text-sm font-medium text-[#0f2231] outline-none placeholder:text-[#95a0ab]"
             />
           </FieldShell>
 
-          <FieldShell icon={<Target className="h-4 w-4" />} label="Categoria">
+          <FieldShell
+            icon={<Target className="h-4 w-4" />}
+            label="Categoria"
+            controlId="search-category"
+          >
             <select
+              id="search-category"
               value={category}
               onChange={(event) => setCategory(event.target.value)}
               className="w-full bg-transparent text-sm font-medium text-[#0f2231] outline-none"
@@ -199,8 +209,13 @@ export default function SearchAdminPage() {
             </select>
           </FieldShell>
 
-          <FieldShell icon={<Search className="h-4 w-4" />} label="Raio de busca">
+          <FieldShell
+            icon={<Search className="h-4 w-4" />}
+            label="Raio de busca"
+            controlId="search-radius"
+          >
             <select
+              id="search-radius"
               value={radius}
               onChange={(event) => setRadius(Number(event.target.value))}
               className="w-full bg-transparent text-sm font-medium text-[#0f2231] outline-none"
@@ -217,6 +232,7 @@ export default function SearchAdminPage() {
             type="button"
             onClick={handleSearch}
             disabled={!canSearch || loading}
+            aria-label="Buscar oportunidades"
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#8e3900] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#7b3100] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
@@ -225,7 +241,11 @@ export default function SearchAdminPage() {
         </div>
 
         <div className="mt-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap items-center gap-2">
+          <div
+            className="flex flex-wrap items-center gap-2"
+            role="group"
+            aria-label="Sugestoes de categoria"
+          >
             <span className="mr-1 text-xs font-semibold uppercase tracking-[0.22em] text-[#8a97a2]">
               Sugestoes:
             </span>
@@ -234,6 +254,7 @@ export default function SearchAdminPage() {
                 key={item}
                 type="button"
                 onClick={() => applySuggestion(item)}
+                aria-label={`Aplicar sugestao ${item}`}
                 className="rounded-full bg-[#edf1f4] px-4 py-1.5 text-xs font-bold text-[#0a5064] transition hover:bg-[#e4eaee]"
               >
                 {item}
@@ -246,6 +267,7 @@ export default function SearchAdminPage() {
               type="button"
               onClick={handleGeolocate}
               disabled={geoLoading}
+              aria-label="Usar minha localizacao atual"
               className="inline-flex items-center gap-2 rounded-full bg-[#eef8fb] px-4 py-2 text-xs font-bold text-[#0a6e70] transition hover:bg-[#e2f3f7] disabled:opacity-70"
             >
               {geoLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <LocateFixed className="h-3.5 w-3.5" />}
@@ -260,6 +282,7 @@ export default function SearchAdminPage() {
                 step={10}
                 value={maxResults}
                 onChange={(event) => setMaxResults(Number(event.target.value) || 50)}
+                aria-label="Quantidade maxima de leads"
                 className="ml-2 w-16 rounded-full border border-[#dde4ea] bg-[#f8fafc] px-3 py-1.5 text-center text-[#0f2231] outline-none"
               />
             </label>
@@ -267,11 +290,16 @@ export default function SearchAdminPage() {
         </div>
 
         {geoError ? (
-          <p className="mt-4 text-sm text-[#b0441c]">{geoError}</p>
+          <p role="alert" className="mt-4 text-sm text-[#b0441c]">
+            {geoError}
+          </p>
         ) : null}
 
         {searchError ? (
-          <div className="mt-4 rounded-2xl border border-[#f4d4ca] bg-[#fff4f0] px-4 py-3 text-sm text-[#8b4a2e]">
+          <div
+            role="alert"
+            className="mt-4 rounded-2xl border border-[#f4d4ca] bg-[#fff4f0] px-4 py-3 text-sm text-[#8b4a2e]"
+          >
             {searchError}
           </div>
         ) : null}
@@ -280,7 +308,7 @@ export default function SearchAdminPage() {
       <section className="space-y-8">
         <div className="flex items-end gap-4">
           <div>
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-[#0a6e70]">The Engine</p>
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-[#0a6e70]">O motor</p>
             <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-[#082d45]">
               Como funciona o Vendability Score?
             </h2>
@@ -322,17 +350,22 @@ export default function SearchAdminPage() {
 function FieldShell({
   icon,
   label,
+  controlId,
   children,
 }: {
   icon: React.ReactNode;
   label: string;
+  controlId: string;
   children: React.ReactNode;
 }) {
   return (
     <div className="rounded-2xl bg-[#f8fafc] px-4 py-3">
-      <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#8a97a2]">
+      <label
+        htmlFor={controlId}
+        className="mb-2 block text-[10px] font-bold uppercase tracking-[0.22em] text-[#8a97a2]"
+      >
         {label}
-      </p>
+      </label>
       <div className="flex items-center gap-3 text-[#0b6d84]">
         {icon}
         <div className="min-w-0 flex-1">{children}</div>

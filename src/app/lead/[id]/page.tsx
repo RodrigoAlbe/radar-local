@@ -500,6 +500,8 @@ export default function LeadDetailPage({
     <div className="mx-auto w-full max-w-[1500px] space-y-8 pb-8 font-[family:var(--font-plus-jakarta)]">
       {toast ? (
         <div
+          role="status"
+          aria-live="polite"
           className={`fixed left-1/2 top-4 z-50 -translate-x-1/2 rounded-full px-4 py-2 text-sm font-medium text-white shadow-lg ${
             toast.type === "success" ? "bg-[#476246]" : "bg-[#765600]"
           }`}
@@ -510,7 +512,9 @@ export default function LeadDetailPage({
 
       <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
         <button
+          type="button"
           onClick={() => router.back()}
+          aria-label="Voltar para a tela anterior"
           className="inline-flex items-center gap-2 self-start rounded-full border border-[#dfe4db] bg-white px-4 py-2 text-sm font-semibold text-[#73808c] transition hover:border-[#cfd8c9] hover:text-[#0f2231]"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -657,17 +661,27 @@ export default function LeadDetailPage({
             <div className="mt-5 space-y-3 border-t border-[#dfe4db] pt-5">
               <div className="grid gap-3 xl:grid-cols-2">
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#6b7369]">Link da LP</label>
+                  <label
+                    htmlFor="lead-demo-link"
+                    className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#6b7369]"
+                  >
+                    Link da LP
+                  </label>
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                    <input type="text" readOnly value={resolvingShareUrls ? "Gerando link..." : demoShareUrl} placeholder="Suba o tunnel para gerar o link publico" className="min-w-0 flex-1 rounded-full border border-[#dde4ea] bg-white px-4 py-3 text-sm text-[#0f2231] placeholder:text-[#8a9388] focus:outline-none" />
-                    <button onClick={handleCopyPublicLink} disabled={copyingLink || !demoShareUrl} className={`w-full shrink-0 rounded-full px-4 py-3 text-sm font-semibold transition sm:w-auto ${copyingLink || !demoShareUrl ? "cursor-not-allowed bg-[#d8ddd5] text-[#98a094]" : linkCopied ? "bg-[#e7f6f2] text-[#0a6e70]" : "bg-[#0a5064] text-white shadow-[0_16px_32px_rgba(56,102,49,0.18)] hover:bg-[#08384a]"}`}>{linkCopied ? "Copiado!" : copyingLink ? "Copiando..." : "Copiar"}</button>
+                    <input id="lead-demo-link" type="text" readOnly aria-label="Link publico da landing page demonstrativa" value={resolvingShareUrls ? "Gerando link..." : demoShareUrl} placeholder="Suba o tunnel para gerar o link publico" className="min-w-0 flex-1 rounded-full border border-[#dde4ea] bg-white px-4 py-3 text-sm text-[#0f2231] placeholder:text-[#8a9388] focus:outline-none" />
+                    <button type="button" onClick={handleCopyPublicLink} aria-label="Copiar link publico da landing page" disabled={copyingLink || !demoShareUrl} className={`w-full shrink-0 rounded-full px-4 py-3 text-sm font-semibold transition sm:w-auto ${copyingLink || !demoShareUrl ? "cursor-not-allowed bg-[#d8ddd5] text-[#98a094]" : linkCopied ? "bg-[#e7f6f2] text-[#0a6e70]" : "bg-[#0a5064] text-white shadow-[0_16px_32px_rgba(56,102,49,0.18)] hover:bg-[#08384a]"}`}>{linkCopied ? "Copiado!" : copyingLink ? "Copiando..." : "Copiar"}</button>
                   </div>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#6b7369]">Link da imagem</label>
+                  <label
+                    htmlFor="lead-image-link"
+                    className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#6b7369]"
+                  >
+                    Link da imagem
+                  </label>
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                    <input type="text" readOnly value={resolvingShareUrls ? "Gerando imagem..." : screenshotShareUrl} placeholder="Suba o tunnel para gerar o link da imagem" className="min-w-0 flex-1 rounded-full border border-[#dde4ea] bg-white px-4 py-3 text-sm text-[#0f2231] placeholder:text-[#8a9388] focus:outline-none" />
-                    <button onClick={handleCopyScreenshotLink} disabled={copyingScreenshotLink || !screenshotShareUrl} className={`w-full shrink-0 rounded-full px-4 py-3 text-sm font-semibold transition sm:w-auto ${copyingScreenshotLink || !screenshotShareUrl ? "cursor-not-allowed bg-[#d8ddd5] text-[#98a094]" : "bg-white text-[#0a6e70] shadow-[0_10px_24px_rgba(15,34,49,0.05)] ring-1 ring-[#d8dfd4] hover:bg-[#f8fbf5]"}`}>{copyingScreenshotLink ? "Copiando..." : "Copiar"}</button>
+                    <input id="lead-image-link" type="text" readOnly aria-label="Link publico da imagem da demonstracao" value={resolvingShareUrls ? "Gerando imagem..." : screenshotShareUrl} placeholder="Suba o tunnel para gerar o link da imagem" className="min-w-0 flex-1 rounded-full border border-[#dde4ea] bg-white px-4 py-3 text-sm text-[#0f2231] placeholder:text-[#8a9388] focus:outline-none" />
+                    <button type="button" onClick={handleCopyScreenshotLink} aria-label="Copiar link da imagem da demonstracao" disabled={copyingScreenshotLink || !screenshotShareUrl} className={`w-full shrink-0 rounded-full px-4 py-3 text-sm font-semibold transition sm:w-auto ${copyingScreenshotLink || !screenshotShareUrl ? "cursor-not-allowed bg-[#d8ddd5] text-[#98a094]" : "bg-white text-[#0a6e70] shadow-[0_10px_24px_rgba(15,34,49,0.05)] ring-1 ring-[#d8dfd4] hover:bg-[#f8fbf5]"}`}>{copyingScreenshotLink ? "Copiando..." : "Copiar"}</button>
                   </div>
                 </div>
               </div>
@@ -697,12 +711,12 @@ export default function LeadDetailPage({
                   <h3 className="text-sm font-semibold text-[#0f2231]">Corrigir redes sociais</h3>
                   <p className="mt-1 text-xs text-[#73808c]">Cole a URL completa ou use um @handle.</p>
                 </div>
-                <button onClick={handleSaveSocials} disabled={!socialInputsChanged || savingSocials} className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-semibold transition ${!socialInputsChanged || savingSocials ? "cursor-not-allowed bg-[#d8ddd5] text-[#98a094]" : "bg-[#0a5064] text-white shadow-[0_16px_32px_rgba(56,102,49,0.18)] hover:bg-[#08384a]"}`}><Save className="h-4 w-4" />{savingSocials ? "Salvando..." : "Salvar redes"}</button>
+                <button type="button" onClick={handleSaveSocials} aria-label="Salvar redes sociais corrigidas" disabled={!socialInputsChanged || savingSocials} className={`inline-flex items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-semibold transition ${!socialInputsChanged || savingSocials ? "cursor-not-allowed bg-[#d8ddd5] text-[#98a094]" : "bg-[#0a5064] text-white shadow-[0_16px_32px_rgba(56,102,49,0.18)] hover:bg-[#08384a]"}`}><Save className="h-4 w-4" />{savingSocials ? "Salvando..." : "Salvar redes"}</button>
               </div>
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                <SocialInput label="Instagram" placeholder="@analins.personalhair" value={instagramInput} onChange={(value) => { setInstagramInput(value); setSocialFormDirty(true); }} />
-                <SocialInput label="Facebook" placeholder="facebook.com/sua-pagina" value={facebookInput} onChange={(value) => { setFacebookInput(value); setSocialFormDirty(true); }} />
-                <SocialInput label="Linktree" placeholder="linktr.ee/sua-marca" value={linktreeInput} onChange={(value) => { setLinktreeInput(value); setSocialFormDirty(true); }} />
+                <SocialInput id="social-instagram" label="Instagram" placeholder="@analins.personalhair" value={instagramInput} onChange={(value) => { setInstagramInput(value); setSocialFormDirty(true); }} />
+                <SocialInput id="social-facebook" label="Facebook" placeholder="facebook.com/sua-pagina" value={facebookInput} onChange={(value) => { setFacebookInput(value); setSocialFormDirty(true); }} />
+                <SocialInput id="social-linktree" label="Linktree" placeholder="linktr.ee/sua-marca" value={linktreeInput} onChange={(value) => { setLinktreeInput(value); setSocialFormDirty(true); }} />
               </div>
             </div>
           </article>
@@ -712,7 +726,7 @@ export default function LeadDetailPage({
             <h2 className="mt-3 flex items-center gap-2 text-2xl font-bold tracking-tight text-[#8e3900]"><Eye className="h-5 w-5" />{"Site de demonstra\u00E7\u00E3o"}</h2>
             <p className="mt-2 text-sm leading-relaxed text-[#8b5b4a]">A mensagem fica sem links no corpo. Compartilhe a LP e a imagem pelos campos acima e abra a demo quando quiser revisar.</p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <a href={`/site/${business.id}`} target="_blank" rel="noopener noreferrer" className="inline-flex min-w-[12rem] items-center justify-center gap-2 rounded-full bg-[#0a5064] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_34px_rgba(0,91,113,0.24)] transition hover:bg-[#08384a]"><Eye className="h-4 w-4" />Ver site demo</a>
+              <a href={`/site/${business.id}`} target="_blank" rel="noopener noreferrer" aria-label={`Abrir site demo de ${business.normalized_name}`} className="inline-flex min-w-[12rem] items-center justify-center gap-2 rounded-full bg-[#0a5064] px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_34px_rgba(0,91,113,0.24)] transition hover:bg-[#08384a]"><Eye className="h-4 w-4" />Ver site demo</a>
             </div>
           </article>
         </div>
@@ -743,7 +757,7 @@ export default function LeadDetailPage({
                 </div>
               ))}
             </div>
-            {score.score_reasons.length > 3 ? (<button onClick={() => setShowAllReasons(!showAllReasons)} className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#0a6e70] hover:underline">{showAllReasons ? (<><ChevronUp className="h-3 w-3" />Mostrar menos</>) : (<><ChevronDown className="h-3 w-3" />Ver todos ({score.score_reasons.length})</>)}</button>) : null}
+            {score.score_reasons.length > 3 ? (<button type="button" aria-expanded={showAllReasons} onClick={() => setShowAllReasons(!showAllReasons)} className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#0a6e70] hover:underline">{showAllReasons ? (<><ChevronUp className="h-3 w-3" />Mostrar menos</>) : (<><ChevronDown className="h-3 w-3" />Ver todos ({score.score_reasons.length})</>)}</button>) : null}
             <div className="mt-5 border-t border-[#e2e8dc] pt-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold text-[#0f2231]">Score total</span>
@@ -760,7 +774,7 @@ export default function LeadDetailPage({
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-[#0f2231]">{"Status da negocia\u00E7\u00E3o"}</h2>
             <div className="mt-5 flex flex-wrap gap-2">
               {(Object.entries(PIPELINE_LABELS) as [PipelineStatus, string][]).map(([status, label]) => (
-                <button key={status} onClick={() => handleStatusChange(status)} className={`rounded-full border px-3 py-2 text-xs font-semibold transition ${currentStatus === status ? PIPELINE_COLORS[status] + " border-current" : "border-[#dde4ea] bg-white text-[#73808c] hover:border-[#d3dde6]"}`}>{label}</button>
+                <button key={status} type="button" aria-pressed={currentStatus === status} onClick={() => handleStatusChange(status)} className={`rounded-full border px-3 py-2 text-xs font-semibold transition ${currentStatus === status ? PIPELINE_COLORS[status] + " border-current" : "border-[#dde4ea] bg-white text-[#73808c] hover:border-[#d3dde6]"}`}>{label}</button>
               ))}
             </div>
             <div className="mt-4 flex flex-wrap gap-2">
@@ -781,19 +795,19 @@ export default function LeadDetailPage({
             </div>
             <div className="mt-5 space-y-4">
               <div className="space-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#6b7369]"><DollarSign className="h-3.5 w-3.5" />Valor proposto</div>
+                <label htmlFor="lead-proposed-value" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#6b7369]"><DollarSign className="h-3.5 w-3.5" />Valor proposto</label>
                 <div className="flex items-center gap-2 rounded-[24px] border border-[#dde4ea] bg-white px-4 py-3">
                   <span className="text-sm font-semibold text-[#73808c]">R$</span>
-                  <input type="text" value={proposedValue || (pipeline?.proposed_value?.toString() ?? "")} onChange={(e) => setProposedValue(e.target.value)} onBlur={() => { const num = parseFloat(proposedValue.replace(/[^\d,.]/g, "").replace(",", ".")); if (!isNaN(num) && num > 0) { updatePipelineFields(business.id, { proposed_value: num }); } setProposedValue(""); }} placeholder="0,00" className="flex-1 bg-transparent text-sm text-[#0f2231] outline-none placeholder:text-[#8a9388]" />
+                  <input id="lead-proposed-value" type="text" aria-label="Valor proposto para este lead" value={proposedValue || (pipeline?.proposed_value?.toString() ?? "")} onChange={(e) => setProposedValue(e.target.value)} onBlur={() => { const num = parseFloat(proposedValue.replace(/[^\d,.]/g, "").replace(",", ".")); if (!isNaN(num) && num > 0) { updatePipelineFields(business.id, { proposed_value: num }); } setProposedValue(""); }} placeholder="0,00" className="flex-1 bg-transparent text-sm text-[#0f2231] outline-none placeholder:text-[#8a9388]" />
                 </div>
               </div>
               <div className="space-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#6b7369]"><Calendar className="h-3.5 w-3.5" />{"Pr\u00F3ximo follow-up"}</div>
-                <input type="date" value={nextFollowup || (pipeline?.next_followup ?? "")} onChange={(e) => { setNextFollowup(e.target.value); updatePipelineFields(business.id, { next_followup: e.target.value || null }); }} className="w-full rounded-[24px] border border-[#dde4ea] bg-white px-4 py-3 text-sm text-[#0f2231] outline-none" />
+                <label htmlFor="lead-next-followup" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#6b7369]"><Calendar className="h-3.5 w-3.5" />{"Pr\u00F3ximo follow-up"}</label>
+                <input id="lead-next-followup" type="date" aria-label="Selecionar proximo follow-up" value={nextFollowup || (pipeline?.next_followup ?? "")} onChange={(e) => { setNextFollowup(e.target.value); updatePipelineFields(business.id, { next_followup: e.target.value || null }); }} className="w-full rounded-[24px] border border-[#dde4ea] bg-white px-4 py-3 text-sm text-[#0f2231] outline-none" />
               </div>
               <div className="space-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#6b7369]"><StickyNote className="h-3.5 w-3.5" />{"Coment\u00E1rios do lead"}</div>
-                <textarea value={notes} onChange={(e) => setNotes(e.target.value)} onBlur={() => { updatePipelineFields(business.id, { notes }); }} placeholder={"Anota\u00E7\u00F5es sobre a negocia\u00E7\u00E3o, contexto do cliente, pr\u00F3ximos passos..."} className="h-28 w-full resize-none rounded-[24px] border border-[#dde4ea] bg-white px-4 py-3 text-sm text-[#0f2231] outline-none placeholder:text-[#8a9388]" />
+                <label htmlFor="lead-notes" className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#6b7369]"><StickyNote className="h-3.5 w-3.5" />{"Coment\u00E1rios do lead"}</label>
+                <textarea id="lead-notes" aria-label="Comentarios internos do lead" value={notes} onChange={(e) => setNotes(e.target.value)} onBlur={() => { updatePipelineFields(business.id, { notes }); }} placeholder={"Anota\u00E7\u00F5es sobre a negocia\u00E7\u00E3o, contexto do cliente, pr\u00F3ximos passos..."} className="h-28 w-full resize-none rounded-[24px] border border-[#dde4ea] bg-white px-4 py-3 text-sm text-[#0f2231] outline-none placeholder:text-[#8a9388]" />
               </div>
             </div>
             {pipeline?.last_contact_at ? (<p className="mt-4 text-xs text-[#73808c]">{"\u00DAltimo contato:"}{" "}{new Date(pipeline.last_contact_at).toLocaleDateString("pt-BR")}</p>) : null}
@@ -808,8 +822,8 @@ export default function LeadDetailPage({
               Salve este lead para seguir no funil ou descarte se ele nao fizer sentido agora.
             </p>
             <div className="mt-5 flex flex-col gap-3">
-              <button onClick={() => { saveLead(business.id); router.back(); }} className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-br from-[#0a5064] to-[#0b7b8a] px-6 py-3 text-sm font-bold text-white shadow-[0_18px_34px_rgba(0,91,113,0.2)] transition hover:opacity-90"><Bookmark className="h-4 w-4" />Salvar lead</button>
-              <button onClick={() => { discardLead(business.id); router.back(); }} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#eef2ea] px-6 py-3 text-sm font-semibold text-[#73808c] transition hover:bg-[#e4eadf]"><Trash2 className="h-4 w-4" />Descartar lead</button>
+              <button type="button" aria-label={`Salvar ${business.normalized_name} no pipeline`} onClick={() => { saveLead(business.id); router.back(); }} className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-br from-[#0a5064] to-[#0b7b8a] px-6 py-3 text-sm font-bold text-white shadow-[0_18px_34px_rgba(0,91,113,0.2)] transition hover:opacity-90"><Bookmark className="h-4 w-4" />Salvar lead</button>
+              <button type="button" aria-label={`Descartar ${business.normalized_name}`} onClick={() => { discardLead(business.id); router.back(); }} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#eef2ea] px-6 py-3 text-sm font-semibold text-[#73808c] transition hover:bg-[#e4eadf]"><Trash2 className="h-4 w-4" />Descartar lead</button>
             </div>
           </article>
         </div>
@@ -847,11 +861,13 @@ function PresenceItem({
 }
 
 function SocialInput({
+  id,
   label,
   placeholder,
   value,
   onChange,
 }: {
+  id: string;
   label: string;
   placeholder: string;
   value: string;
@@ -859,10 +875,13 @@ function SocialInput({
 }) {
   return (
     <label className="block space-y-1.5">
-      <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6b7369]">
+      <span
+        className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6b7369]"
+      >
         {label}
       </span>
       <input
+        id={id}
         type="text"
         value={value}
         onChange={(event) => onChange(event.target.value)}

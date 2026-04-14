@@ -30,7 +30,11 @@ export default function AppFrame({
   return (
     <>
       <Navigation />
-      <main className="flex-1 max-w-lg mx-auto w-full px-4 pt-4 pb-24">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="mx-auto flex-1 w-full max-w-lg px-4 pt-4 pb-24"
+      >
         {children}
       </main>
     </>

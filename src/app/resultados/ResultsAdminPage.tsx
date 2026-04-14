@@ -133,7 +133,7 @@ export default function ResultsAdminPage() {
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#7b8792]">
-              Prospecting engine
+              Radar comercial
             </p>
             <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-[#082d45] md:text-5xl">
               Busca e Triagem
@@ -143,7 +143,9 @@ export default function ResultsAdminPage() {
             </p>
           </div>
           <div className="rounded-[20px] bg-[#fff3eb] px-5 py-4 shadow-[0_12px_28px_rgba(142,57,0,0.06)]">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#8e3900]">Hot leads today</p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#8e3900]">
+              Leads quentes hoje
+            </p>
             <p className="mt-2 text-3xl font-black text-[#082d45]">{displayedLeads.length}</p>
           </div>
         </div>
@@ -169,7 +171,11 @@ export default function ResultsAdminPage() {
           </div>
 
           <div className="mt-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex flex-wrap items-center gap-2">
+            <div
+              className="flex flex-wrap items-center gap-2"
+              role="group"
+              aria-label="Filtros rapidos de leads"
+            >
               <span className="mr-2 text-[11px] font-bold uppercase tracking-[0.24em] text-[#7b8792]">
                 Filtros rapidos
               </span>
@@ -185,6 +191,7 @@ export default function ResultsAdminPage() {
               <select
                 value={sortMode}
                 onChange={(event) => setSortMode(event.target.value as SortMode)}
+                aria-label="Ordenar resultados"
                 className="bg-transparent font-semibold text-[#0f2231] outline-none"
               >
                 <option value="relevance">Relevancia</option>
@@ -205,6 +212,7 @@ export default function ResultsAdminPage() {
             type="text"
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
+            aria-label="Buscar empresas nos resultados"
             placeholder="Buscar rapida de empresas..."
             className="w-full rounded-full border-none bg-[#e9edf2] py-3 pl-11 pr-4 text-sm text-[#0f2231] outline-none placeholder:text-[#8a97a2]"
           />
@@ -218,6 +226,7 @@ export default function ResultsAdminPage() {
             return (
               <article
                 key={lead.business.id}
+                aria-labelledby={`lead-title-${lead.business.id}`}
                 className="rounded-[24px] bg-white p-5 shadow-[0_12px_28px_rgba(15,34,49,0.05)]"
               >
                 <div className="flex items-start justify-between gap-4">
@@ -226,7 +235,10 @@ export default function ResultsAdminPage() {
                       {leadInitials(lead)}
                     </div>
                     <div className="min-w-0">
-                      <h2 className="truncate text-lg font-bold text-[#0f2231]">
+                      <h2
+                        id={`lead-title-${lead.business.id}`}
+                        className="truncate text-lg font-bold text-[#0f2231]"
+                      >
                         {lead.business.normalized_name}
                       </h2>
                       <p className="truncate text-sm text-[#73808c]">
@@ -286,6 +298,7 @@ export default function ResultsAdminPage() {
                       <button
                         type="button"
                         onClick={() => discardLead(lead.business.id)}
+                        aria-label={`Remover ${lead.business.normalized_name} da selecao`}
                         className="rounded-xl bg-[#eef2f6] px-4 py-2 text-sm font-semibold text-[#5f6f7d] transition hover:bg-[#e5ebf0]"
                       >
                         Remover
@@ -294,6 +307,7 @@ export default function ResultsAdminPage() {
                       <button
                         type="button"
                         onClick={() => saveLead(lead.business.id)}
+                        aria-label={`Salvar ${lead.business.normalized_name} no pipeline`}
                         className="rounded-xl bg-[#0a5064] px-4 py-2 text-sm font-bold text-white transition hover:opacity-90"
                       >
                         Salvar Lead
@@ -345,6 +359,7 @@ function FilterChip({ active, label, onClick }: { active: boolean; label: string
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={active}
       className={`rounded-full px-3 py-1.5 text-xs font-bold transition ${
         active ? "bg-[#d8f4f6] text-[#0a6e70]" : "bg-[#f1f5f8] text-[#5f6f7d] hover:bg-[#e7edf2]"
       }`}

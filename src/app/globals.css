@@ -38,6 +38,29 @@ body {
   font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
 }
 
+:focus-visible {
+  outline: 3px solid rgba(0, 91, 113, 0.38);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  border-radius: 999px;
+  background: #08384a;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -88,4 +111,15 @@ body::before {
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background: #c8d1d8;
   border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
