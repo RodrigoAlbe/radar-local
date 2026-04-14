@@ -1,0 +1,34 @@
+<svg width="960" height="1200" viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="1200" rx="56" fill="#F7F0E8"/>
+  <rect x="72" y="74" width="816" height="300" rx="44" fill="url(#bg1)"/>
+  <rect x="116" y="414" width="520" height="252" rx="38" fill="#FFFDF9"/>
+  <rect x="532" y="760" width="274" height="180" rx="32" fill="url(#card)"/>
+  <rect x="94" y="812" width="338" height="144" rx="30" fill="#FFFDF9"/>
+  <rect x="118" y="962" width="218" height="150" rx="28" fill="#F2D7AF"/>
+  <rect x="382" y="930" width="186" height="182" rx="28" fill="#E8DDCF"/>
+  <rect x="610" y="992" width="182" height="120" rx="28" fill="#EFE3D6"/>
+  <circle cx="784" cy="190" r="54" fill="#FFFDF9"/>
+  <circle cx="224" cy="540" r="42" fill="#FFF3E0"/>
+  <path d="M200 510v56M224 510v56M248 510v56M284 510v96" stroke="#D79B54" stroke-width="12" stroke-linecap="round"/>
+  <path d="M274 510c20 16 20 42 0 58" stroke="#D79B54" stroke-width="12" stroke-linecap="round"/>
+  <text x="146" y="176" fill="#75614B" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="5">SABOR LOCAL</text>
+  <text x="274" y="510" fill="#8A7766" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">HERO ART</text>
+  <text x="274" y="570" fill="#171715" font-family="Arial, sans-serif" font-size="64" font-weight="700">Vitrine que abre</text>
+  <text x="274" y="638" fill="#171715" font-family="Arial, sans-serif" font-size="64" font-weight="700">o apetite</text>
+  <text x="274" y="698" fill="#65584E" font-family="Arial, sans-serif" font-size="32">Cardapio, balcao e entrega</text>
+  <text x="132" y="870" fill="#8A7766" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">MENU</text>
+  <text x="132" y="920" fill="#171715" font-family="Arial, sans-serif" font-size="36" font-weight="600">Apresentacao visual</text>
+  <text x="132" y="962" fill="#171715" font-family="Arial, sans-serif" font-size="36" font-weight="600">mais gostosa e clara</text>
+  <text x="564" y="822" fill="#FFF0D8" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">DESTAQUE</text>
+  <text x="564" y="892" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="600">Cardapio em foco</text>
+  <defs>
+    <linearGradient id="bg1" x1="72" y1="74" x2="888" y2="374" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF1DB"/>
+      <stop offset="1" stop-color="#EFE4D8"/>
+    </linearGradient>
+    <linearGradient id="card" x1="532" y1="760" x2="806" y2="940" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D79B54"/>
+      <stop offset="1" stop-color="#9E7654"/>
+    </linearGradient>
+  </defs>
+</svg>

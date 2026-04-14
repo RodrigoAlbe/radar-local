@@ -1,0 +1,33 @@
+<svg width="960" height="1200" viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="1200" rx="56" fill="#F7F1EA"/>
+  <rect x="72" y="72" width="816" height="296" rx="44" fill="url(#bg1)"/>
+  <rect x="120" y="416" width="520" height="254" rx="38" fill="#FFFDF9"/>
+  <rect x="536" y="754" width="272" height="178" rx="34" fill="url(#card)"/>
+  <rect x="94" y="810" width="338" height="148" rx="30" fill="#FFFDF9"/>
+  <rect x="118" y="964" width="214" height="148" rx="28" fill="#EFD7B9"/>
+  <rect x="382" y="930" width="186" height="182" rx="28" fill="#E5DBCF"/>
+  <rect x="610" y="992" width="182" height="120" rx="28" fill="#EFE5DA"/>
+  <circle cx="784" cy="190" r="56" fill="#FFFDF9"/>
+  <circle cx="220" cy="540" r="42" fill="#FAF0E4"/>
+  <path d="M192 520h56l8 20v42h-72v-42l8-20ZM206 582v20h44v-20" stroke="#C28C5D" stroke-width="10" stroke-linejoin="round"/>
+  <text x="146" y="176" fill="#816A53" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="5">VITRINE</text>
+  <text x="274" y="510" fill="#8A7561" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">HERO ART</text>
+  <text x="274" y="570" fill="#171715" font-family="Arial, sans-serif" font-size="64" font-weight="700">Produtos em</text>
+  <text x="274" y="638" fill="#171715" font-family="Arial, sans-serif" font-size="64" font-weight="700">primeiro plano</text>
+  <text x="274" y="698" fill="#65584E" font-family="Arial, sans-serif" font-size="32">Vitrine, oferta e atendimento</text>
+  <text x="132" y="870" fill="#8A7561" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">LOJA</text>
+  <text x="132" y="920" fill="#171715" font-family="Arial, sans-serif" font-size="36" font-weight="600">Mais cara de marca</text>
+  <text x="132" y="962" fill="#171715" font-family="Arial, sans-serif" font-size="36" font-weight="600">e menos improviso</text>
+  <text x="566" y="822" fill="#FAECD9" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">DESTAQUE</text>
+  <text x="566" y="892" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="600">Oferta em foco</text>
+  <defs>
+    <linearGradient id="bg1" x1="72" y1="72" x2="888" y2="368" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FAEFD8"/>
+      <stop offset="1" stop-color="#EEE3D8"/>
+    </linearGradient>
+    <linearGradient id="card" x1="536" y1="754" x2="808" y2="932" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C28C5D"/>
+      <stop offset="1" stop-color="#907560"/>
+    </linearGradient>
+  </defs>
+</svg>

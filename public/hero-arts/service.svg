@@ -1,0 +1,36 @@
+<svg width="960" height="1200" viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="1200" rx="56" fill="#F4EFE8"/>
+  <rect x="72" y="72" width="816" height="300" rx="42" fill="url(#bg1)"/>
+  <rect x="110" y="422" width="520" height="252" rx="36" fill="#FFFDF9"/>
+  <rect x="512" y="760" width="286" height="178" rx="32" fill="url(#card)"/>
+  <rect x="96" y="814" width="332" height="136" rx="30" fill="#FFFDF9"/>
+  <rect x="126" y="962" width="204" height="168" rx="28" fill="#C7D9F7"/>
+  <rect x="372" y="922" width="198" height="208" rx="28" fill="#DDD4C6"/>
+  <rect x="612" y="986" width="186" height="144" rx="28" fill="#E6DFD4"/>
+  <circle cx="782" cy="186" r="56" fill="#FFFDF9"/>
+  <circle cx="214" cy="552" r="42" fill="#EDF3FF"/>
+  <path d="M222.7 528.8a8 8 0 0 1 11.3 0l9.2 9.2a8 8 0 0 1 0 11.3l-21.8 21.8a35 35 0 1 1-13.1-13.1l21.8-21.8ZM170 604a18 18 0 1 0 0-36 18 18 0 0 0 0 36Z" fill="#4C87F5"/>
+  <path d="M268 518v18M259 527h18" stroke="#4C87F5" stroke-width="10" stroke-linecap="round"/>
+  <path d="M560 840h64" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+  <path d="M592 808v64" stroke="#fff" stroke-width="14" stroke-linecap="round"/>
+  <text x="148" y="172" fill="#6D6154" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="5">NEGOCIO LOCAL</text>
+  <text x="252" y="506" fill="#8C7A69" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">HERO ART</text>
+  <text x="250" y="566" fill="#151515" font-family="Arial, sans-serif" font-size="64" font-weight="700">Assistencia</text>
+  <text x="250" y="636" fill="#151515" font-family="Arial, sans-serif" font-size="64" font-weight="700">tecnica local</text>
+  <text x="250" y="696" fill="#6B5A52" font-family="Arial, sans-serif" font-size="32">Conserto, retirada e suporte</text>
+  <text x="138" y="872" fill="#8C7A69" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">BAIRRO</text>
+  <text x="138" y="922" fill="#1C1C19" font-family="Arial, sans-serif" font-size="36" font-weight="600">Contato rapido e</text>
+  <text x="138" y="964" fill="#1C1C19" font-family="Arial, sans-serif" font-size="36" font-weight="600">mais confianca visual</text>
+  <text x="548" y="822" fill="#DCE7FF" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">SERVICO</text>
+  <text x="548" y="892" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="600">Bancada e suporte</text>
+  <defs>
+    <linearGradient id="bg1" x1="72" y1="72" x2="888" y2="372" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E9F0FB"/>
+      <stop offset="1" stop-color="#EFE8DF"/>
+    </linearGradient>
+    <linearGradient id="card" x1="512" y1="760" x2="798" y2="938" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5C93F1"/>
+      <stop offset="1" stop-color="#8D7A66"/>
+    </linearGradient>
+  </defs>
+</svg>

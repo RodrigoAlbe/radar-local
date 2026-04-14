@@ -1,0 +1,36 @@
+<svg width="960" height="1200" viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="1200" rx="56" fill="#F6F1EA"/>
+  <rect x="76" y="70" width="808" height="292" rx="44" fill="url(#bg1)"/>
+  <rect x="128" y="406" width="510" height="260" rx="38" fill="#FFFDF9"/>
+  <rect x="548" y="748" width="258" height="180" rx="34" fill="url(#card)"/>
+  <rect x="94" y="804" width="338" height="150" rx="30" fill="#FFFDF9"/>
+  <ellipse cx="226" cy="1006" rx="120" ry="88" fill="#DDECCF"/>
+  <ellipse cx="474" cy="1012" rx="110" ry="96" fill="#E6D8C8"/>
+  <ellipse cx="688" cy="1018" rx="116" ry="82" fill="#EFE4D7"/>
+  <circle cx="782" cy="190" r="56" fill="#FFFDF9"/>
+  <circle cx="220" cy="538" r="44" fill="#F1F8EA"/>
+  <path d="M182 558c0-25 20-45 45-45 13 0 24 5 32 14 8-9 19-14 32-14 25 0 45 20 45 45 0 37-30 66-77 66-47 0-77-29-77-66Z" fill="#7DA66F"/>
+  <circle cx="188" cy="484" r="24" fill="#7DA66F"/>
+  <circle cx="252" cy="468" r="24" fill="#7DA66F"/>
+  <circle cx="316" cy="484" r="24" fill="#7DA66F"/>
+  <text x="150" y="172" fill="#66715D" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="5">PET CARE</text>
+  <text x="276" y="508" fill="#8B7C6E" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">HERO ART</text>
+  <text x="274" y="568" fill="#171715" font-family="Arial, sans-serif" font-size="64" font-weight="700">Cuidado</text>
+  <text x="274" y="636" fill="#171715" font-family="Arial, sans-serif" font-size="64" font-weight="700">com carinho</text>
+  <text x="274" y="696" fill="#65584E" font-family="Arial, sans-serif" font-size="32">Banho, consulta e atencao</text>
+  <text x="134" y="866" fill="#8B7C6E" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">ESPACO</text>
+  <text x="134" y="916" fill="#171715" font-family="Arial, sans-serif" font-size="36" font-weight="600">Recepcao acolhedora</text>
+  <text x="134" y="958" fill="#171715" font-family="Arial, sans-serif" font-size="36" font-weight="600">para pets e tutores</text>
+  <text x="578" y="810" fill="#EAF6DE" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">DESTAQUE</text>
+  <text x="578" y="882" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="600">Banho e consulta</text>
+  <defs>
+    <linearGradient id="bg1" x1="76" y1="70" x2="884" y2="362" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EEF7E6"/>
+      <stop offset="1" stop-color="#F0E7DD"/>
+    </linearGradient>
+    <linearGradient id="card" x1="548" y1="748" x2="806" y2="928" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7DA66F"/>
+      <stop offset="1" stop-color="#C0A278"/>
+    </linearGradient>
+  </defs>
+</svg>

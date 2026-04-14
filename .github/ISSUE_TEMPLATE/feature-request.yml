@@ -1,0 +1,62 @@
+name: Feature request
+description: Suggest an improvement aligned with the product direction.
+title: "[Feature] "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Radar Local is moving toward a sales-focused workflow for local-business prospecting.
+        Use this template to describe a concrete improvement and why it matters.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What user pain or missed opportunity are you seeing?
+      placeholder: Users can find leads, but they still spend too much time deciding who to contact first.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the feature, behavior, or workflow you would like to add.
+      placeholder: Add a daily operational queue that groups hot leads, overdue follow-ups, and leads with responses.
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Expected outcome
+      description: How would this improve conversion, usability, or maintainability?
+      placeholder: This would reduce decision fatigue and make the product feel more like a sales operating system.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Main area
+      options:
+        - Search and sourcing
+        - Lead scoring
+        - Offer suggestion
+        - Lead detail
+        - Pipeline and follow-up
+        - Public demo and LP
+        - Screenshots and sharing
+        - Metrics and ROI
+        - Platform and infrastructure
+        - Docs
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Extra context
+      description: Add examples, references, or implementation constraints if helpful.

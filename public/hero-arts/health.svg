@@ -1,0 +1,33 @@
+<svg width="960" height="1200" viewBox="0 0 960 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="1200" rx="56" fill="#F4F1EB"/>
+  <rect x="74" y="72" width="812" height="296" rx="44" fill="url(#bg1)"/>
+  <rect x="122" y="416" width="514" height="254" rx="38" fill="#FFFDF9"/>
+  <rect x="540" y="752" width="270" height="180" rx="34" fill="url(#card)"/>
+  <rect x="96" y="808" width="334" height="148" rx="30" fill="#FFFDF9"/>
+  <rect x="118" y="962" width="214" height="148" rx="28" fill="#D8ECEA"/>
+  <rect x="382" y="930" width="188" height="180" rx="28" fill="#E3DBD0"/>
+  <rect x="610" y="990" width="182" height="120" rx="28" fill="#EEE5DA"/>
+  <circle cx="782" cy="190" r="56" fill="#FFFDF9"/>
+  <circle cx="220" cy="540" r="42" fill="#EAF7F5"/>
+  <path d="M218 506v68M184 540h68" stroke="#6CA7A0" stroke-width="14" stroke-linecap="round"/>
+  <text x="146" y="176" fill="#63756F" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="5">SAUDE</text>
+  <text x="274" y="510" fill="#7A8F8A" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">HERO ART</text>
+  <text x="274" y="570" fill="#171715" font-family="Arial, sans-serif" font-size="64" font-weight="700">Confianca</text>
+  <text x="274" y="638" fill="#171715" font-family="Arial, sans-serif" font-size="64" font-weight="700">logo na chegada</text>
+  <text x="274" y="698" fill="#65584E" font-family="Arial, sans-serif" font-size="32">Recepcao, consulta e seguranca</text>
+  <text x="132" y="868" fill="#7A8F8A" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">CLINICA</text>
+  <text x="132" y="918" fill="#171715" font-family="Arial, sans-serif" font-size="36" font-weight="600">Ambiente mais claro</text>
+  <text x="132" y="960" fill="#171715" font-family="Arial, sans-serif" font-size="36" font-weight="600">e profissional</text>
+  <text x="568" y="820" fill="#E0F3F0" font-family="Arial, sans-serif" font-size="22" letter-spacing="4">DESTAQUE</text>
+  <text x="568" y="890" fill="#fff" font-family="Arial, sans-serif" font-size="34" font-weight="600">Consulta em foco</text>
+  <defs>
+    <linearGradient id="bg1" x1="74" y1="72" x2="886" y2="368" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E9F8F4"/>
+      <stop offset="1" stop-color="#ECE4DA"/>
+    </linearGradient>
+    <linearGradient id="card" x1="540" y1="752" x2="810" y2="932" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6CA7A0"/>
+      <stop offset="1" stop-color="#8D7661"/>
+    </linearGradient>
+  </defs>
+</svg>

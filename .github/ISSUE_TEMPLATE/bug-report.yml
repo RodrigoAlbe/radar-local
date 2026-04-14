@@ -1,0 +1,59 @@
+name: Bug report
+description: Report a reproducible bug in the product or developer workflow.
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please include enough detail for someone else to reproduce it quickly.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is happening, and what did you expect instead?
+      placeholder: When I move a lead to another column, the lead disappears from the list view unexpectedly.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the exact steps someone can follow.
+      placeholder: |
+        1. Go to /pipeline
+        2. Drag a lead from "Novo" to "Abordado"
+        3. Return to /resultados
+        4. Notice that...
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Affected area
+      description: Which part of the product is affected?
+      placeholder: Search, results, lead detail, pipeline, history, public demo, screenshots, or docs.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs, screenshots, or extra context
+      description: Paste anything that helps narrow the problem down.
+      render: shell
+
+  - type: dropdown
+    id: regression
+    attributes:
+      label: Is this a regression?
+      options:
+        - I do not know
+        - Yes
+        - No
+    validations:
+      required: true
