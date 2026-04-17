@@ -13,10 +13,12 @@
     "landing-page"
   ],
   "scripts": {
+    "setup": "node scripts/setup.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "security:check": "node scripts/check-secrets.mjs",
     "tunnel": "node scripts/tunnel.js"
   },
   "dependencies": {

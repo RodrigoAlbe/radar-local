@@ -56,19 +56,37 @@ Outros nichos entram por heuristicas mais genericas de categoria.
 
 ```bash
 npm install
-cp .env.example .env.local
+npm run setup
 npm run dev
 ```
 
 No PowerShell, voce tambem pode usar:
 
 ```powershell
-Copy-Item .env.example .env.local
+npm run setup
 ```
 
 Abra [http://localhost:3000](http://localhost:3000).
 
 Sem configurar servicos externos, o app ainda funciona em modo local com dados e persistencia no navegador para facilitar testes do fluxo.
+
+`npm run setup` prepara o ambiente inicial para qualquer pessoa:
+
+- cria `.env.local` a partir do arquivo de exemplo, sem sobrescrever se ele ja existir
+- garante as pastas locais usadas pelo projeto
+- deixa o app pronto para abrir em modo demo local
+
+## Fluxo mais simples para testar
+
+Se voce quer apenas abrir o produto e explorar o fluxo:
+
+```bash
+npm install
+npm run setup
+npm run dev
+```
+
+Isso ja permite navegar pelo dashboard, busca, resultados, lead e pipeline em modo local.
 
 ## Variaveis de ambiente
 
@@ -98,14 +116,18 @@ Use `.env.example` como referencia.
 ## Scripts
 
 ```bash
+npm run setup
 npm run dev
 npm run build
 npm run start
 npm run lint
+npm run security:check
 npm run tunnel
 ```
 
 `npm run tunnel` existe para compartilhamento rapido em ambiente local. Para um deploy publico estavel, a recomendacao e publicar em infraestrutura real e nao depender de tunel temporario.
+
+`npm run security:check` procura chaves reais e valores suspeitos em arquivos rastreados antes de um push publico.
 
 ## Documentacao de produto
 
@@ -153,6 +175,12 @@ Alguns arquivos devem continuar locais e nao devem entrar em um push publico:
 
 Esses arquivos sao ignorados pelo `.gitignore` porque podem conter chaves, estado operacional, links de tunnel e dados reais de leads.
 
+Antes de abrir PR ou publicar um fork, rode:
+
+```bash
+npm run security:check
+```
+
 ## Contribuicao
 
 As orientacoes de contribuicao estao em [CONTRIBUTING.md](./CONTRIBUTING.md).
@@ -180,4 +208,4 @@ Current capabilities include:
 - public share links and screenshot generation
 - operational pipeline and history views
 
-For local setup, copy `.env.example` to `.env.local`, install dependencies, and run `npm run dev`.
+For local setup, run `npm install`, `npm run setup`, and then `npm run dev`.

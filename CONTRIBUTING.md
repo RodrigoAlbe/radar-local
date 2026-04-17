@@ -12,14 +12,14 @@ Obrigado por querer contribuir.
 
 ```bash
 npm install
-cp .env.example .env.local
+npm run setup
 npm run dev
 ```
 
 No PowerShell:
 
 ```powershell
-Copy-Item .env.example .env.local
+npm run setup
 ```
 
 ## Checklist minimo
@@ -27,6 +27,7 @@ Copy-Item .env.example .env.local
 Antes de enviar um pull request, valide:
 
 ```bash
+npm run security:check
 npm run lint
 npm run build
 ```
@@ -60,6 +61,7 @@ Se a sua contribuicao mexe nisso, tente preservar esse framing.
 - Evite dependencias novas sem justificativa clara.
 - Se adicionar configuracao nova, atualize `.env.example` e o `README.md`.
 - Nao inclua `.env.local`, `.mcp.json`, dados reais de `data/` ou links temporarios de tunnel em commits.
+- Antes de publicar, rode `npm run security:check`.
 
 ## Pull requests
 

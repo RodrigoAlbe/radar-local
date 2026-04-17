@@ -27,6 +27,7 @@ git rm --cached data/sites/*.json
 ## 2. Validar localmente
 
 ```bash
+npm run security:check
 npm run lint
 npm run build
 ```

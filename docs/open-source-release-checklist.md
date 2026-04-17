@@ -19,6 +19,7 @@ Use esta lista antes de subir o projeto para um repositorio publico.
 
 ## Validacao tecnica
 
+- Rodar `npm run security:check`
 - Rodar `npm run lint`
 - Rodar `npm run build`
 - Confirmar que `npm run dev` sobe localmente
