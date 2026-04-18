@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { enforceLocalApiAccess, enforceSimpleRateLimit } from "@/lib/api-security";
+import { normalizeSafeExternalUrl } from "@/lib/url-guard";
 
 const TIMEOUT_MS = 5000;
 
@@ -104,6 +106,16 @@ function extractFromCSS(html: string): string | null {
 }
 
 export async function POST(request: NextRequest) {
+  const accessDenied = enforceLocalApiAccess(request);
+  if (accessDenied) return accessDenied;
+
+  const rateLimited = enforceSimpleRateLimit(request, {
+    key: "extract-color-post",
+    limit: 40,
+    windowMs: 60_000,
+  });
+  if (rateLimited) return rateLimited;
+
   try {
     const { url } = await request.json();
 
@@ -111,9 +123,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ color: null });
     }
 
-    let targetUrl = url;
-    if (!targetUrl.startsWith("http")) {
-      targetUrl = `https://${targetUrl}`;
+    const targetUrl = normalizeSafeExternalUrl(url);
+    if (!targetUrl) {
+      return NextResponse.json({ color: null });
     }
 
     const html = await fetchWithTimeout(targetUrl);

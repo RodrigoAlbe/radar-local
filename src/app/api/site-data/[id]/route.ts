@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
 import crypto from "crypto";
+import { enforceLocalApiAccess, enforceSimpleRateLimit } from "@/lib/api-security";
 
 const DATA_DIR = path.join(process.cwd(), "data", "sites");
 const SHORT_URLS_PATH = path.join(process.cwd(), "data", "short-urls.json");
@@ -44,9 +45,12 @@ async function getOrCreateShortCode(fullId: string): Promise<string> {
 }
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const accessDenied = enforceLocalApiAccess(request);
+  if (accessDenied) return accessDenied;
+
   const { id } = await params;
   const safeId = sanitizeId(id);
   if (!safeId) {
@@ -69,6 +73,16 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const accessDenied = enforceLocalApiAccess(request);
+  if (accessDenied) return accessDenied;
+
+  const rateLimited = enforceSimpleRateLimit(request, {
+    key: "site-data-put",
+    limit: 40,
+    windowMs: 60_000,
+  });
+  if (rateLimited) return rateLimited;
+
   const { id } = await params;
   const safeId = sanitizeId(id);
   if (!safeId) {
@@ -78,9 +92,17 @@ export async function PUT(
   try {
     const body = await request.json();
     const { lead } = body;
+    const normalizedLeadId = sanitizeId(String(lead?.business?.id ?? ""));
 
     if (!lead?.business?.id) {
       return NextResponse.json({ error: "Lead inválido" }, { status: 400 });
+    }
+
+    if (normalizedLeadId !== safeId) {
+      return NextResponse.json(
+        { error: "ID do lead incompatÃ­vel com a rota" },
+        { status: 400 },
+      );
     }
 
     await fs.mkdir(DATA_DIR, { recursive: true });

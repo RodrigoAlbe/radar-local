@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSocialOverride } from "@/lib/social-overrides";
+import { enforceLocalApiAccess, enforceSimpleRateLimit } from "@/lib/api-security";
+import { normalizeSafeExternalUrl } from "@/lib/url-guard";
 
 const WEBSITE_FETCH_TIMEOUT_MS = 2500;
 const SEARCH_FETCH_TIMEOUT_MS = 2000;
@@ -46,17 +48,7 @@ type EnrichmentResult = {
 };
 
 function normalizeInputUrl(raw: string): string | null {
-  const trimmed = raw.trim();
-  if (!trimmed) return null;
-
-  try {
-    const url = new URL(/^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`);
-    if (!["http:", "https:"].includes(url.protocol)) return null;
-    url.hash = "";
-    return url.toString();
-  } catch {
-    return null;
-  }
+  return normalizeSafeExternalUrl(raw);
 }
 
 async function fetchHtml(url: string, timeoutMs = WEBSITE_FETCH_TIMEOUT_MS): Promise<string | null> {
@@ -525,6 +517,16 @@ async function enrichFromWebsite(
 }
 
 export async function POST(request: NextRequest) {
+  const accessDenied = enforceLocalApiAccess(request);
+  if (accessDenied) return accessDenied;
+
+  const rateLimited = enforceSimpleRateLimit(request, {
+    key: "enrich-social-post",
+    limit: 30,
+    windowMs: 60_000,
+  });
+  if (rateLimited) return rateLimited;
+
   try {
     const body = (await request.json()) as {
       businessId?: string;

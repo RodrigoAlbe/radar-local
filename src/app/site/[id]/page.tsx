@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /* eslint-disable @next/next/no-img-element */
 
@@ -15,6 +15,10 @@ import {
 } from "@/lib/site-generator";
 import { inferLeadCategory } from "@/lib/category-inference";
 import { ensureLeadSitePublished, fetchPublishedLead } from "@/lib/site-share";
+import {
+  EXTERNAL_API_KEYS_STORAGE_KEY,
+  normalizeExternalApiKeys,
+} from "@/lib/external-api-keys";
 import {
   Phone,
   MapPin,
@@ -37,6 +41,19 @@ import {
 import CategoryLogo from "@/components/CategoryLogo";
 
 const STORAGE_KEY = "radar_local_state";
+
+function getExternalKeysFromStorage() {
+  if (typeof window === "undefined") {
+    return normalizeExternalApiKeys(null);
+  }
+
+  try {
+    const raw = localStorage.getItem(EXTERNAL_API_KEYS_STORAGE_KEY);
+    return normalizeExternalApiKeys(raw ? JSON.parse(raw) : null);
+  } catch {
+    return normalizeExternalApiKeys(null);
+  }
+}
 
 function getLeadFromStorage(id: string): Lead | null {
   if (typeof window === "undefined") return null;
@@ -834,8 +851,12 @@ export default function SitePreviewPage({ params }: { params: Promise<{ id: stri
 
     const hydrateBrandMedia = async (nextLead: Lead) => {
       if (typeof window === "undefined") return;
+      const externalKeys = getExternalKeysFromStorage();
+      const hasAiProviderKey = Boolean(
+        externalKeys.geminiApiKey || externalKeys.openAiApiKey,
+      );
 
-      const cacheKey = `brand_media_v2_${id}`;
+      const cacheKey = `brand_media_v3_${id}_${hasAiProviderKey ? "ai" : "noai"}`;
       const cached = localStorage.getItem(cacheKey);
 
       if (cached) {
@@ -864,6 +885,11 @@ export default function SitePreviewPage({ params }: { params: Promise<{ id: stri
         instagramUrl: nextLead.signals.instagram_url ?? undefined,
         facebookUrl: nextLead.signals.facebook_url ?? undefined,
         linktreeUrl: nextLead.signals.linktree_url ?? undefined,
+        businessName: nextLead.business.normalized_name ?? undefined,
+        category: nextLead.business.category ?? undefined,
+        brandColor: nextLead.signals.brand_color ?? undefined,
+        openAiApiKey: externalKeys.openAiApiKey || undefined,
+        geminiApiKey: externalKeys.geminiApiKey || undefined,
       };
 
       if (

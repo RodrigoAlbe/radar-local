@@ -1,10 +1,14 @@
 # Seguranca
 
-Se voce encontrar uma vulnerabilidade ou identificar um vazamento potencial de credenciais, abra uma issue apenas se for seguro fazer isso publicamente.
+Se voce encontrar vulnerabilidade, exposicao de dados ou vazamento de credenciais, trate como incidente de seguranca.
 
-Para casos sensiveis, prefira entrar em contato privado com o mantenedor do fork ou repositorio onde o projeto estiver hospedado.
+## Como reportar
 
-## O que nao deve ir para o Git
+- Nao publique detalhes sensiveis em issue aberta.
+- Abra uma issue com o minimo necessario apenas para sinalizar o problema.
+- Em seguida, combine canal privado com o mantenedor do repositorio/fork.
+
+## Escopo de segredos que nunca devem ir para o Git
 
 - `.env.local`
 - `.mcp.json`
@@ -12,9 +16,7 @@ Para casos sensiveis, prefira entrar em contato privado com o mantenedor do fork
 - links temporarios de tunnel
 - credenciais de Supabase, Google, OpenAI, Gemini ou qualquer outro provider
 
-## Verificacao antes de publicar
-
-Rode este comando antes de abrir PR ou fazer push publico:
+## Checklist minimo de seguranca antes de PR/push
 
 ```bash
 npm run security:check
@@ -22,11 +24,11 @@ npm run security:check
 
 Esse script procura chaves reais e valores suspeitos em arquivos rastreados.
 
-## Rotacao de credenciais
+## Rotacao de credenciais (se houve leak)
 
-Se alguma chave real tiver sido commitada por engano:
+Se alguma chave real for commitada por engano:
 
-1. revogue a chave no provedor
+1. revogue imediatamente a chave no provedor
 2. gere uma nova credencial
-3. remova o valor do repositorio e do historico, se necessario
-4. publique a correcao
+3. remova o valor do repositorio e, quando necessario, do historico
+4. publique correcao e informe impacto de forma objetiva

@@ -1,0 +1,38 @@
+name: Pergunta
+description: Duvida de uso, setup ou comportamento esperado do projeto.
+title: "[Pergunta] "
+labels:
+  - question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por abrir uma pergunta. Tente trazer contexto suficiente para facilitar uma resposta objetiva.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Qual e a duvida?
+      description: Explique sua pergunta de forma direta.
+      placeholder: Estou subindo o projeto localmente, mas nao entendi qual chave e obrigatoria para busca real.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto
+      description: O que voce ja tentou e em qual ambiente?
+      placeholder: |
+        - Sistema operacional:
+        - Comandos executados:
+        - Mensagem de erro (se houver):
+    validations:
+      required: true
+
+  - type: textarea
+    id: links
+    attributes:
+      label: Referencias adicionais
+      description: Links de log, screenshots ou trechos de codigo que ajudem.
+

@@ -1,1 +1,8 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Pergunta de uso ou setup
+    url: https://github.com/RodrigoAlbe/radar-local/blob/main/SUPPORT.md
+    about: Use o guia de suporte para perguntas gerais de uso, setup e troubleshooting.
+  - name: Reporte de seguranca
+    url: https://github.com/RodrigoAlbe/radar-local/blob/main/SECURITY.md
+    about: Para vulnerabilidades ou vazamentos, siga o fluxo de SECURITY.md (sem expor detalhes publicos).

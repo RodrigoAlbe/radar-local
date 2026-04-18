@@ -15,6 +15,14 @@ import {
   normalizeAppState,
   STORAGE_KEY,
 } from "./app-state";
+import {
+  EXTERNAL_API_KEYS_STORAGE_KEY,
+  ExternalApiKeys,
+  initialExternalApiKeys,
+  normalizeExternalApiKeys,
+} from "./external-api-keys";
+
+type ExternalApiKeyName = keyof ExternalApiKeys;
 
 type Action =
   | { type: "SET_LEADS"; leads: Lead[] }
@@ -197,8 +205,10 @@ function reducer(state: AppState, action: Action): AppState {
 
 interface StoreContext {
   state: AppState;
+  externalApiKeys: ExternalApiKeys;
   isHydrated: boolean;
   dispatch: React.Dispatch<Action>;
+  setExternalApiKey: (key: ExternalApiKeyName, value: string) => void;
   setLeads: (leads: Lead[]) => void;
   updatePipeline: (businessId: string, status: PipelineStatus, notes?: string) => void;
   updatePipelineFields: (
@@ -218,7 +228,10 @@ const Context = createContext<StoreContext | null>(null);
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialAppState);
+  const [externalApiKeys, setExternalApiKeys] =
+    useState<ExternalApiKeys>(initialExternalApiKeys);
   const [isHydrated, setIsHydrated] = useState(false);
+  const [externalKeysHydrated, setExternalKeysHydrated] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -269,6 +282,32 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    try {
+      const savedKeys = localStorage.getItem(EXTERNAL_API_KEYS_STORAGE_KEY);
+      if (savedKeys) {
+        setExternalApiKeys(normalizeExternalApiKeys(JSON.parse(savedKeys)));
+      }
+    } catch {
+      // Keep empty external keys if local cache is unavailable/corrupted.
+    } finally {
+      setExternalKeysHydrated(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!externalKeysHydrated) return;
+
+    try {
+      localStorage.setItem(
+        EXTERNAL_API_KEYS_STORAGE_KEY,
+        JSON.stringify(externalApiKeys),
+      );
+    } catch {
+      // localStorage unavailable/full
+    }
+  }, [externalApiKeys, externalKeysHydrated]);
+
+  useEffect(() => {
     if (!isHydrated) return;
 
     try {
@@ -292,6 +331,17 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const setLeads = useCallback(
     (leads: Lead[]) => dispatch({ type: "SET_LEADS", leads }),
+    [],
+  );
+
+  const setExternalApiKey = useCallback(
+    (key: ExternalApiKeyName, value: string) => {
+      const normalizedValue = typeof value === "string" ? value.trim() : "";
+      setExternalApiKeys((current) => ({
+        ...current,
+        [key]: normalizedValue.slice(0, 300),
+      }));
+    },
     [],
   );
 
@@ -400,8 +450,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     <Context.Provider
       value={{
         state,
+        externalApiKeys,
         isHydrated,
         dispatch,
+        setExternalApiKey,
         setLeads,
         updatePipeline,
         updatePipelineFields,

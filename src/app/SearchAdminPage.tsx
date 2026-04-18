@@ -32,7 +32,7 @@ const SUGGESTIONS = ["Dentistas", "Advogados", "Pet Shops", "Oficinas"] as const
 
 export default function SearchAdminPage() {
   const router = useRouter();
-  const { setLeads, addSearchJob } = useStore();
+  const { setLeads, addSearchJob, externalApiKeys } = useStore();
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("");
   const [radius, setRadius] = useState(5);
@@ -41,6 +41,7 @@ export default function SearchAdminPage() {
   const [searchError, setSearchError] = useState("");
   const [geoLoading, setGeoLoading] = useState(false);
   const [geoError, setGeoError] = useState("");
+  const googlePlacesApiKey = externalApiKeys.googlePlacesApiKey.trim();
 
   const canSearch = location.trim().length > 0;
 
@@ -99,6 +100,7 @@ export default function SearchAdminPage() {
           category: category || undefined,
           radius,
           maxResults,
+          googlePlacesApiKey: googlePlacesApiKey || undefined,
         }),
       });
 
@@ -288,6 +290,13 @@ export default function SearchAdminPage() {
             </label>
           </div>
         </div>
+
+        {!googlePlacesApiKey ? (
+          <p className="mt-3 text-xs text-[#8a97a2]">
+            Sem chave no admin: a busca pode usar modo mock se o servidor nao tiver
+            `GOOGLE_PLACES_API_KEY`.
+          </p>
+        ) : null}
 
         {geoError ? (
           <p role="alert" className="mt-4 text-sm text-[#b0441c]">

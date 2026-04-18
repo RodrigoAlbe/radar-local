@@ -1,12 +1,16 @@
 # Contribuindo com Radar Local
 
-Obrigado por querer contribuir.
+Obrigado por querer contribuir. Este projeto esta em evolucao ativa e feedback de produto + codigo e muito bem-vindo.
 
-## Antes de abrir PR
+## Codigo de conduta
 
-1. Abra uma issue ou descreva claramente o problema que voce quer resolver.
-2. Mantenha o escopo pequeno e facil de revisar.
-3. Evite misturar refactor grande com mudanca funcional.
+Ao participar, voce concorda com o [Codigo de Conduta](./CODE_OF_CONDUCT.md).
+
+## Por onde comecar
+
+1. Procure uma issue aberta (de preferencia `good first issue` ou `help wanted`).
+2. Se nao houver issue para o que voce quer fazer, abra uma nova com contexto claro.
+3. Mantenha o escopo pequeno, incremental e facil de revisar.
 
 ## Setup local
 
@@ -22,9 +26,7 @@ No PowerShell:
 npm run setup
 ```
 
-## Checklist minimo
-
-Antes de enviar um pull request, valide:
+## Checklist antes do PR
 
 ```bash
 npm run security:check
@@ -32,7 +34,7 @@ npm run lint
 npm run build
 ```
 
-Se a mudanca tocar o fluxo principal, valide tambem:
+Se a mudanca tocar fluxo funcional, valide manualmente:
 
 - dashboard
 - busca
@@ -43,34 +45,34 @@ Se a mudanca tocar o fluxo principal, valide tambem:
 
 ## Direcao do produto
 
-O objetivo do projeto nao e apenas encontrar leads.
+O objetivo do Radar Local nao e apenas encontrar leads.
 
-A direcao atual e transformar o produto em uma maquina de prospeccao orientada a fechamento:
+A direcao principal e ser uma maquina de prospeccao orientada a fechamento:
 
-- decidir quem abordar hoje
-- sugerir qual oferta faz sentido
-- gerar demo comercial por nicho
+- priorizar quem abordar hoje
+- sugerir oferta e abordagem por lead
+- gerar demo comercial util para conversa de vendas
 - registrar execucao comercial e proximos passos
 
-Se a sua contribuicao mexe nisso, tente preservar esse framing.
+Se sua contribuicao mexe nisso, preserve esse framing.
 
 ## Padroes que ajudam
 
-- Prefira mudancas incrementais e legiveis.
-- Preserve a linguagem visual definida nas telas administrativas e demos.
+- Prefira mudancas legiveis e com baixo risco de regressao.
 - Evite dependencias novas sem justificativa clara.
-- Se adicionar configuracao nova, atualize `.env.example` e o `README.md`.
-- Nao inclua `.env.local`, `.mcp.json`, dados reais de `data/` ou links temporarios de tunnel em commits.
-- Antes de publicar, rode `npm run security:check`.
+- Se adicionar configuracao nova, atualize `.env.example` e `README.md`.
+- Nao versione dados locais/sensiveis (`.env.local`, `.mcp.json`, `data/`, links de tunnel).
 
-## Pull requests
+## Pull request
 
-Uma boa descricao de PR costuma incluir:
+Uma boa descricao de PR normalmente inclui:
 
 - contexto
 - mudanca principal
 - risco conhecido
 - como validar
+
+Use o template de PR para acelerar revisao.
 
 ## Licenca
 

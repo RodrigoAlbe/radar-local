@@ -1,8 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
+import { promises as fs } from "fs";
+import path from "path";
+import crypto from "crypto";
+import { enforceLocalApiAccess, enforceSimpleRateLimit } from "@/lib/api-security";
+import { normalizeSafeExternalUrl } from "@/lib/url-guard";
+
+export const runtime = "nodejs";
 
 const FETCH_TIMEOUT_MS = 4500;
 const USER_AGENT = "Mozilla/5.0 (compatible; RadarLocal/1.0)";
 const MAX_HTML_LENGTH = 180_000;
+const GENERATED_HERO_DIR = path.join(
+  process.cwd(),
+  "public",
+  "hero-arts",
+  "generated",
+);
 
 type AssetRole = "hero" | "logo" | "favicon";
 
@@ -21,18 +34,243 @@ type BrandAssetsResponse = {
 };
 
 function normalizeInputUrl(raw: string | null | undefined): string | null {
-  if (!raw) return null;
-  const trimmed = raw.trim();
-  if (!trimmed) return null;
+  return normalizeSafeExternalUrl(raw);
+}
 
-  try {
-    const url = new URL(/^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`);
-    if (!["http:", "https:"].includes(url.protocol)) return null;
-    url.hash = "";
-    return url.toString();
-  } catch {
-    return null;
+function sanitizeExternalApiKey(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const normalized = value.trim();
+  if (!normalized) return null;
+  if (normalized.length < 20 || normalized.length > 300) return null;
+  return normalized;
+}
+
+function normalizeColorToken(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  return /^#[0-9a-fA-F]{6}$/.test(trimmed) ? trimmed.toLowerCase() : null;
+}
+
+function slugify(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
+function normalizeCategory(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function getCategoryPromptDirection(category: string): string {
+  const normalized = normalizeCategory(category);
+  if (
+    normalized.includes("assistencia tecnica") ||
+    normalized.includes("conserto") ||
+    normalized.includes("oficina") ||
+    normalized.includes("autoeletrica") ||
+    normalized.includes("mecanica")
+  ) {
+    return "tecnico trabalhando em bancada de eletronicos e ferramentas reais de manutencao";
   }
+  if (normalized.includes("pet") || normalized.includes("veterin")) {
+    return "ambiente de pet shop com pet feliz, cuidado e atendimento local";
+  }
+  if (
+    normalized.includes("restaurante") ||
+    normalized.includes("lanchonete") ||
+    normalized.includes("padaria")
+  ) {
+    return "ambiente de gastronomia local com balcao, preparo e atendimento acolhedor";
+  }
+  if (
+    normalized.includes("barbearia") ||
+    normalized.includes("salao") ||
+    normalized.includes("beleza")
+  ) {
+    return "ambiente de cuidado pessoal com cadeira, espelho e atendimento profissional";
+  }
+  if (
+    normalized.includes("odontolog") ||
+    normalized.includes("clinica") ||
+    normalized.includes("saude")
+  ) {
+    return "recepcao de clinica limpa com equipe e ambiente profissional de confianca";
+  }
+  if (
+    normalized.includes("papelaria") ||
+    normalized.includes("loja") ||
+    normalized.includes("roupa")
+  ) {
+    return "vitrine de comercio local organizada com produtos em destaque";
+  }
+
+  return "negocio local moderno e acolhedor, com atendimento humano e ambiente real";
+}
+
+function buildHeroPrompt(input: {
+  businessName: string;
+  category: string;
+  brandColor: string | null;
+}): string {
+  const direction = getCategoryPromptDirection(input.category);
+  const colorToken = input.brandColor ?? "#924a28";
+
+  return [
+    "Use case: landing page hero image for local business",
+    "Create one photorealistic vertical image 4:5, premium but natural.",
+    `Business: ${input.businessName}`,
+    `Category: ${input.category}`,
+    `Scene: ${direction}`,
+    `Palette hint: warm neutrals with subtle harmony to ${colorToken}`,
+    "No text, no logos, no watermark, no UI cards, no interface screenshot, no collage.",
+    "Avoid fashion store scenes unless category is retail.",
+  ].join("\n");
+}
+
+async function generateWithOpenAI(prompt: string, apiKey: string): Promise<Buffer> {
+  const response = await fetch("https://api.openai.com/v1/images/generations", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-image-1",
+      prompt,
+      size: "1024x1536",
+      quality: "medium",
+      n: 1,
+    }),
+    signal: AbortSignal.timeout(35_000),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`openai ${response.status} ${errorText}`);
+  }
+
+  const data = (await response.json()) as {
+    data?: Array<{ b64_json?: string }>;
+  };
+  const encoded = data?.data?.[0]?.b64_json;
+  if (!encoded) {
+    throw new Error("openai response without b64 image");
+  }
+
+  return Buffer.from(encoded, "base64");
+}
+
+async function generateWithGemini(prompt: string, apiKey: string): Promise<Buffer> {
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${apiKey}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseModalities: ["TEXT", "IMAGE"],
+        },
+      }),
+      signal: AbortSignal.timeout(35_000),
+    },
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`gemini ${response.status} ${errorText}`);
+  }
+
+  const data = (await response.json()) as {
+    candidates?: Array<{
+      content?: {
+        parts?: Array<{
+          inlineData?: {
+            data?: string;
+          };
+        }>;
+      };
+    }>;
+  };
+
+  const encoded = data?.candidates?.[0]?.content?.parts?.find(
+    (part) => part.inlineData?.data,
+  )?.inlineData?.data;
+
+  if (!encoded) {
+    throw new Error("gemini response without inline image");
+  }
+
+  return Buffer.from(encoded, "base64");
+}
+
+async function generateAiHeroImage(input: {
+  businessName: string;
+  category: string;
+  brandColor: string | null;
+  openAiApiKey: string | null;
+  geminiApiKey: string | null;
+}): Promise<{ url: string; source: string } | null> {
+  const { businessName, category, brandColor, openAiApiKey, geminiApiKey } = input;
+  if (!openAiApiKey && !geminiApiKey) return null;
+
+  const prompt = buildHeroPrompt({ businessName, category, brandColor });
+  const fileHash = crypto
+    .createHash("sha1")
+    .update([businessName, category, brandColor ?? "", prompt].join("|"))
+    .digest("hex")
+    .slice(0, 12);
+  const baseName =
+    `${slugify(businessName) || "negocio"}-${slugify(category) || "local"}-${fileHash}`;
+
+  const providerOrder: Array<"gemini" | "openai"> = geminiApiKey
+    ? ["gemini", "openai"]
+    : ["openai", "gemini"];
+
+  await fs.mkdir(GENERATED_HERO_DIR, { recursive: true });
+
+  for (const provider of providerOrder) {
+    try {
+      const fileName = `${baseName}-${provider}.png`;
+      const filePath = path.join(GENERATED_HERO_DIR, fileName);
+      const publicPath = `/hero-arts/generated/${fileName}`;
+
+      try {
+        await fs.access(filePath);
+        return { url: publicPath, source: `ai-${provider}` };
+      } catch {
+        // Generate below.
+      }
+
+      const imageBuffer =
+        provider === "gemini"
+          ? geminiApiKey
+            ? await generateWithGemini(prompt, geminiApiKey)
+            : null
+          : openAiApiKey
+            ? await generateWithOpenAI(prompt, openAiApiKey)
+            : null;
+
+      if (!imageBuffer) continue;
+
+      await fs.writeFile(filePath, imageBuffer);
+      return { url: publicPath, source: `ai-${provider}` };
+    } catch (error) {
+      console.warn(`[extract-brand-assets] fallback ${provider} failed`, error);
+    }
+  }
+
+  return null;
 }
 
 async function fetchHtml(url: string): Promise<string | null> {
@@ -336,16 +574,42 @@ async function extractFromPage(url: string): Promise<AssetCandidate[]> {
 }
 
 export async function POST(request: NextRequest) {
+  const accessDenied = enforceLocalApiAccess(request);
+  if (accessDenied) return accessDenied;
+
+  const rateLimited = enforceSimpleRateLimit(request, {
+    key: "extract-brand-assets-post",
+    limit: 30,
+    windowMs: 60_000,
+  });
+  if (rateLimited) return rateLimited;
+
   try {
     const body = (await request.json()) as {
       websiteUrl?: string;
       instagramUrl?: string;
       facebookUrl?: string;
       linktreeUrl?: string;
+      businessName?: string;
+      category?: string;
+      brandColor?: string;
+      openAiApiKey?: string;
+      geminiApiKey?: string;
     };
 
     const candidates: AssetCandidate[] = [];
     const websiteUrl = normalizeInputUrl(body.websiteUrl);
+    const openAiApiKey = sanitizeExternalApiKey(body.openAiApiKey);
+    const geminiApiKey = sanitizeExternalApiKey(body.geminiApiKey);
+    const businessName =
+      typeof body.businessName === "string" && body.businessName.trim()
+        ? body.businessName.trim()
+        : "Negocio local";
+    const category =
+      typeof body.category === "string" && body.category.trim()
+        ? body.category.trim()
+        : "Comercio local";
+    const brandColor = normalizeColorToken(body.brandColor);
 
     if (websiteUrl) {
       for (const candidateUrl of buildWebsiteCandidates(websiteUrl)) {
@@ -363,12 +627,22 @@ export async function POST(request: NextRequest) {
     const hero = chooseBest(candidates, "hero");
     const logo = chooseBest(candidates, "logo");
     const favicon = chooseBest(candidates, "favicon");
+    const aiHero =
+      hero?.url
+        ? null
+        : await generateAiHeroImage({
+            businessName,
+            category,
+            brandColor,
+            openAiApiKey,
+            geminiApiKey,
+          });
 
     return NextResponse.json({
-      heroImageUrl: hero?.url ?? null,
+      heroImageUrl: hero?.url ?? aiHero?.url ?? null,
       logoImageUrl: logo?.url ?? favicon?.url ?? null,
       faviconUrl: favicon?.url ?? null,
-      source: hero?.source ?? logo?.source ?? favicon?.source ?? null,
+      source: hero?.source ?? aiHero?.source ?? logo?.source ?? favicon?.source ?? null,
     } satisfies BrandAssetsResponse);
   } catch {
     return NextResponse.json({

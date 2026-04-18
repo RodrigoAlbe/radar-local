@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { enforceLocalApiAccess } from "@/lib/api-security";
 
 const URL_FILE = path.join(process.cwd(), "data", "tunnel-url.txt");
 const INFO_FILE = path.join(process.cwd(), "data", "tunnel-info.json");
@@ -22,7 +23,10 @@ function isProcessRunning(pid: number | undefined): boolean {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const accessDenied = enforceLocalApiAccess(request);
+  if (accessDenied) return accessDenied;
+
   try {
     const rawInfo = await fs.readFile(INFO_FILE, "utf-8");
     const info = JSON.parse(rawInfo) as TunnelInfo;

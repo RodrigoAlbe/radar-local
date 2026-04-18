@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { initialAppState, normalizeAppState } from "@/lib/app-state";
 import { getSupabaseServerClient, isSupabaseServerConfigured } from "@/lib/supabase-server";
+import { enforceLocalApiAccess, enforceSimpleRateLimit } from "@/lib/api-security";
 
 export const dynamic = "force-dynamic";
 
@@ -82,7 +83,10 @@ async function writeSupabaseState(state: ReturnType<typeof normalizeAppState>) {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const accessDenied = enforceLocalApiAccess(request);
+  if (accessDenied) return accessDenied;
+
   const [localState, supabaseState] = await Promise.all([
     readLocalState(),
     readSupabaseState(),
@@ -103,6 +107,16 @@ export async function GET() {
 }
 
 export async function PUT(request: NextRequest) {
+  const accessDenied = enforceLocalApiAccess(request);
+  if (accessDenied) return accessDenied;
+
+  const rateLimited = enforceSimpleRateLimit(request, {
+    key: "app-state-put",
+    limit: 60,
+    windowMs: 60_000,
+  });
+  if (rateLimited) return rateLimited;
+
   try {
     const body = await request.json();
     const state = normalizeAppState(body?.state);

@@ -3,6 +3,7 @@ import { generateMockLeads } from "@/lib/mock-data";
 import { deduplicateBusinesses } from "@/lib/dedup";
 import { calculateScore } from "@/lib/scoring";
 import { Lead, BusinessEntity, DigitalSignals } from "@/lib/types";
+import { enforceLocalApiAccess, enforceSimpleRateLimit } from "@/lib/api-security";
 
 const GOOGLE_PLACES_URL = "https://places.googleapis.com/v1/places:searchText";
 
@@ -598,16 +599,37 @@ function buildQuery(location: string, category?: string): string {
   return shouldIncludeLocation ? `${base} em ${location}` : base;
 }
 
+function sanitizeExternalApiKey(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const normalized = value.trim();
+  if (!normalized) return null;
+  if (normalized.length < 20 || normalized.length > 300) return null;
+  return normalized;
+}
+
 export async function POST(request: NextRequest) {
+  const accessDenied = enforceLocalApiAccess(request);
+  if (accessDenied) return accessDenied;
+
+  const rateLimited = enforceSimpleRateLimit(request, {
+    key: "buscar-post",
+    limit: 30,
+    windowMs: 60_000,
+  });
+  if (rateLimited) return rateLimited;
+
   try {
     const body = await request.json();
     const { location, category, radius, maxResults } = body;
+    const bodyApiKey = sanitizeExternalApiKey(
+      body?.googlePlacesApiKey ?? body?.apiKey,
+    );
 
     if (!location) {
       return NextResponse.json({ error: "Localiza??o ? obrigat?ria" }, { status: 400 });
     }
 
-    const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+    const apiKey = bodyApiKey ?? process.env.GOOGLE_PLACES_API_KEY;
     const limit = Math.min(200, Math.max(1, Number(maxResults) || 20));
     const radiusKm = Math.min(50, Math.max(1, Number(radius) || 5));
 

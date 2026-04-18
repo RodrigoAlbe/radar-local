@@ -4,6 +4,30 @@ Radar Local e uma ferramenta de prospeccao para quem vende servicos digitais par
 
 Em vez de funcionar apenas como um buscador de leads, o produto organiza oportunidades para abordar hoje: encontra negocios com baixa maturidade digital, aplica score, sugere oferta, gera uma demo de landing page por nicho e acompanha a execucao comercial em um pipeline simples.
 
+## Primeira impressao em 2 minutos
+
+```bash
+npm install
+npm run setup
+npm run dev
+```
+
+Abra [http://localhost:3000](http://localhost:3000) e teste este fluxo:
+
+1. Buscar oportunidades em `/search`
+2. Triar leads em `/resultados`
+3. Atualizar status em `/pipeline`
+4. Abrir detalhe em `/lead/[id]`
+5. Ver demo em `/site/[id]`
+
+Sem chaves externas, o app ainda funciona em modo local para avaliacao do fluxo completo.
+
+## Para quem este projeto e util
+
+- agencias e freelancers que vendem servicos digitais para comercio local
+- times comerciais que querem priorizacao de abordagem com contexto
+- devs que querem contribuir com um SaaS open source em Next.js focado em vendas
+
 ## O que existe hoje
 
 - Busca de negocios por categoria, regiao e raio
@@ -113,6 +137,11 @@ Use `.env.example` como referencia.
 - `SCREENSHOT_BROWSER_PATH`
 - `PORT`
 
+### Opcionais de seguranca local
+
+- `ALLOW_NON_LOCAL_API` (padrao `false`, bloqueia rotas sensiveis fora de localhost/rede local)
+- `INTERNAL_API_KEY` (header `x-internal-api-key` para liberar chamadas externas de forma controlada)
+
 ## Scripts
 
 ```bash
@@ -138,6 +167,14 @@ Os documentos de produto mais recentes estao em [docs/](./docs):
 - `arquitetura-funcional-revisada.md`
 - `backlog-monetizacao-priorizado.md`
 
+## Arquivos de community health
+
+- [CONTRIBUTING.md](./CONTRIBUTING.md)
+- [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+- [SECURITY.md](./SECURITY.md)
+- [SUPPORT.md](./SUPPORT.md)
+- [LICENSE](./LICENSE)
+
 ## Estado atual do projeto
 
 O projeto ja cobre bem o fluxo de descoberta, triagem, demo comercial e acompanhamento inicial. Ainda ha espaco para evolucao em:
@@ -159,6 +196,11 @@ Se voce for abrir issues ou contribuir, os pontos mais valiosos hoje sao:
 2. experiencia operacional do pipeline
 3. demos por nicho
 4. confiabilidade do compartilhamento publico
+
+Para contribuir mais rapido, comece por:
+
+- [Good first issues](https://github.com/RodrigoAlbe/radar-local/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+- [Help wanted](https://github.com/RodrigoAlbe/radar-local/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
 
 ## Dados sensiveis e arquivos locais
 
@@ -184,6 +226,7 @@ npm run security:check
 ## Contribuicao
 
 As orientacoes de contribuicao estao em [CONTRIBUTING.md](./CONTRIBUTING.md).
+Duvidas gerais podem ir para [SUPPORT.md](./SUPPORT.md), e casos sensiveis para [SECURITY.md](./SECURITY.md).
 
 Se voce estiver preparando um fork ou a primeira publicacao do projeto, veja tambem [docs/open-source-release-checklist.md](./docs/open-source-release-checklist.md).
 

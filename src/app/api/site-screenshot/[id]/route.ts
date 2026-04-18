@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import { chromium } from "playwright-core";
+import { enforceLocalApiAccess, enforceSimpleRateLimit } from "@/lib/api-security";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -56,6 +57,16 @@ export async function GET(
   request: NextRequest,
   context: { params: Promise<{ id: string }> },
 ) {
+  const accessDenied = enforceLocalApiAccess(request);
+  if (accessDenied) return accessDenied;
+
+  const rateLimited = enforceSimpleRateLimit(request, {
+    key: "site-screenshot-get",
+    limit: 12,
+    windowMs: 60_000,
+  });
+  if (rateLimited) return rateLimited;
+
   const { id } = await context.params;
   const executablePath = await findBrowserExecutable();
 

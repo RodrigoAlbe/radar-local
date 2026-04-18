@@ -1,10 +1,21 @@
 "use client";
 
-import { Database, Globe, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { useState } from "react";
+import {
+  Database,
+  Eye,
+  EyeOff,
+  Globe,
+  KeyRound,
+  ShieldCheck,
+  Sparkles,
+  Users,
+} from "lucide-react";
 import { useStore } from "@/lib/store";
 
 export default function SettingsPage() {
-  const { state } = useStore();
+  const { state, externalApiKeys, setExternalApiKey } = useStore();
+  const [showKeys, setShowKeys] = useState(false);
 
   return (
     <div className="mx-auto w-full max-w-[1500px] space-y-8 pb-8">
@@ -37,6 +48,61 @@ export default function SettingsPage() {
           title="Agency ready"
           body="O modelo esta preparado para evoluir para workspaces, ownership e multiusuario."
         />
+      </section>
+
+      <section className="rounded-[28px] bg-white p-6 shadow-[0_12px_28px_rgba(15,34,49,0.05)]">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#eef8fb] text-[#0a6e70]">
+              <KeyRound className="h-5 w-5" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-[#0f2231]">Chaves externas</h2>
+              <p className="mt-1 text-sm text-[#73808c]">
+                Configure provedores direto no admin para cada usuario da maquina.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setShowKeys((current) => !current)}
+            className="inline-flex items-center gap-2 rounded-full bg-[#eef2f6] px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-[#4f5f6d]"
+          >
+            {showKeys ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+            {showKeys ? "Ocultar" : "Mostrar"}
+          </button>
+        </div>
+
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <ApiKeyInput
+            label="Google Places API key"
+            value={externalApiKeys.googlePlacesApiKey}
+            placeholder="Cole a chave para buscas reais"
+            reveal={showKeys}
+            onChange={(value) => setExternalApiKey("googlePlacesApiKey", value)}
+          />
+          <ApiKeyInput
+            label="OpenAI API key"
+            value={externalApiKeys.openAiApiKey}
+            placeholder="Opcional para recursos de IA"
+            reveal={showKeys}
+            onChange={(value) => setExternalApiKey("openAiApiKey", value)}
+          />
+          <ApiKeyInput
+            label="Gemini API key"
+            value={externalApiKeys.geminiApiKey}
+            placeholder="Opcional para recursos de IA"
+            reveal={showKeys}
+            onChange={(value) => setExternalApiKey("geminiApiKey", value)}
+          />
+        </div>
+
+        <div className="mt-4 rounded-2xl border border-[#e8edf2] bg-[#f8fafc] px-4 py-3 text-sm text-[#556471]">
+          As chaves ficam salvas apenas neste navegador (localStorage). A busca usa
+          a chave Google Places daqui e, na geracao de visuais do site demo, o app
+          tenta Gemini/OpenAI como fallback quando nao encontra uma imagem boa da marca.
+        </div>
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_360px]">
@@ -101,6 +167,38 @@ function SettingCard({
       <h2 className="mt-5 text-xl font-bold text-[#0f2231]">{title}</h2>
       <p className="mt-3 text-sm leading-relaxed text-[#73808c]">{body}</p>
     </article>
+  );
+}
+
+function ApiKeyInput({
+  label,
+  value,
+  placeholder,
+  reveal,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  placeholder: string;
+  reveal: boolean;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="rounded-2xl border border-[#e4ebf1] bg-white px-4 py-3">
+      <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-[#81909b]">
+        {label}
+      </span>
+      <input
+        type={reveal ? "text" : "password"}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        placeholder={placeholder}
+        spellCheck={false}
+        autoCapitalize="none"
+        autoComplete="off"
+        className="w-full bg-transparent text-sm font-medium text-[#0f2231] outline-none placeholder:text-[#9eabb6]"
+      />
+    </label>
   );
 }
 

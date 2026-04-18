@@ -1,62 +1,47 @@
 # Checklist de publicacao open source
 
-Use esta lista antes de subir o projeto para um repositorio publico.
+Use esta lista antes de divulgar o projeto publicamente.
 
-## Identidade do repositorio
+## 1. Primeira impressao do repositorio
 
-- Definir nome final do repositorio
-- Definir descricao curta do GitHub
-- Escolher topicos do repositorio
-- Subir uma imagem de social preview
+- README com setup rapido e proposta de valor clara
+- descricao curta do repo no GitHub
+- topicos configurados no repo
+- social preview image configurada
+- community health presente: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `SUPPORT.md`, `LICENSE`
 
-## Arquivos obrigatorios
+## 2. Seguranca e higiene de codigo
 
-- `README.md`
-- `LICENSE`
-- `.env.example`
-- `CONTRIBUTING.md`
-- `.gitignore`
+- rodar `npm run security:check`
+- rodar `npm run lint`
+- rodar `npm run build`
+- confirmar que `npm run dev` sobe localmente
+- confirmar que `.env.local` nao esta rastreado
+- confirmar que `.mcp.json` nao esta rastreado
+- confirmar que `data/` local nao esta rastreado
+- revisar se nao ha chaves hardcoded no codigo
 
-## Validacao tecnica
+## 3. Fluxo funcional minimo (smoke test)
 
-- Rodar `npm run security:check`
-- Rodar `npm run lint`
-- Rodar `npm run build`
-- Confirmar que `npm run dev` sobe localmente
-- Confirmar que nao existem segredos hardcoded no codigo
-- Confirmar que `.env.local` nao esta rastreado
-- Confirmar que `.mcp.json` nao esta rastreado
-- Confirmar que arquivos gerados em `data/` nao estao rastreados
+- home operacional
+- busca por categoria e regiao
+- resultados com filtros
+- atualizacao de status no pipeline
+- pagina de detalhe do lead
+- demo publica em `/site/[id]`
+- link curto em `/s/[code]`
 
-## Fluxos para testar antes da publicacao
+## 4. Infra e configuracao
 
-- Home operacional
-- Busca por categoria e regiao
-- Lista de oportunidades
-- Atualizacao de status no pipeline
-- Pagina de detalhe do lead
-- Geracao da demo publica
-- Copia de link curto
+- revisar credenciais de Supabase no ambiente local
+- validar comportamento sem chaves externas
+- validar comportamento com chave externa no admin
+- documentar limitacoes do tunnel local
+- priorizar deploy publico estavel para compartilhamento real
 
-## Dados e infraestrutura
+## 5. Pronto para divulgar
 
-- Revisar credenciais do Supabase
-- Confirmar estrutura minima do banco
-- Confirmar comportamento sem chaves externas
-- Documentar limitacoes do tunnel local
-
-## Recomendacoes para o primeiro release
-
-- Criar repositorio publico
-- Fazer push da branch principal
-- Abrir uma issue de roadmap
-- Abrir uma issue de bugs conhecidos
-- Publicar um `v0.1.0`
-- Seguir `docs/github-publish-steps.md` antes do primeiro push
-
-## Pendencias futuras recomendadas
-
-- `SECURITY.md`
-- templates de issue
-- template de pull request
-- GitHub Actions para lint e build
+- abrir uma issue de roadmap
+- abrir uma issue de bugs conhecidos
+- criar tag/release inicial (ex.: `v0.1.0`)
+- seguir `docs/github-publish-steps.md` antes de qualquer push sensivel
